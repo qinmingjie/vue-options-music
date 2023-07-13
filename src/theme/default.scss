@@ -1,0 +1,48 @@
+$--colors: (
+  "primary": (
+    "base": #ec4141
+  ),
+  "success": (
+    "base": #21ba45
+  ),
+  "warning": (
+    "base": #f2711c
+  ),
+  "danger": (
+    "base": #db2828
+  ),
+  "error": (
+    "base": #db2828
+  ),
+  "info": (
+    "base": #42b8dd
+  )
+);
+
+@forward "element-plus/theme-chalk/src/common/var.scss" with (
+  $colors: $--colors
+);
+@use "./dark.scss";
+
+:root {
+  --cm-header-text-color: #ffffff;
+  --cm-content-text-color: #ffffff;
+  --cm-aside-text-color: #ffffff;
+  --cm-footer-text-color: #ffffff;
+
+  --cm-header-bg-color: #ec4141;
+  --cm-footer-bg-color: #ffffff;
+  --cm-content-bg-color: #ffffff;
+
+  --cm-placeholder-color: rgba(255, 255, 255, 0.5);
+}
+:root.dark {
+  --cm-header-text-color: #ffffff;
+  --cm-content-text-color: #ffffff;
+  --cm-aside-text-color: #ffffff;
+  --cm-footer-text-color: #ffffff;
+
+  --cm-header-bg-color: #232326;
+  --cm-footer-bg-color: #232326;
+  --cm-content-bg-color: #2b2b2b;
+}

@@ -13,6 +13,13 @@ import IconsResolver from "unplugin-icons/resolver";
 // https://vitejs.dev/config/
 
 export default defineConfig({
+  css: {
+    preprocessorOptions: {
+      scss: {
+        additionalData: `@use "@/theme/default.scss" as *;`
+      }
+    }
+  },
   plugins: [
     vue(),
     AutoImport({
