@@ -1,7 +1,9 @@
 <template>
   <div class="layout-comp">
     <el-container>
-      <el-header class="cm-header"></el-header>
+      <el-header class="cm-header">
+        <HeaderComp />
+      </el-header>
       <el-container class="cm-content">
         <el-aside class="cm-aside"></el-aside>
         <el-main class="cm-main">
@@ -14,8 +16,10 @@
 </template>
 
 <script>
+import HeaderComp from "@/components/header/index.vue";
 export default {
-  name: "LayoutIndex"
+  name: "LayoutIndex",
+  components: { HeaderComp }
 };
 </script>
 

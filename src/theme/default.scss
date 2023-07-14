@@ -35,6 +35,7 @@ $--colors: (
   --cm-content-bg-color: #ffffff;
 
   --cm-placeholder-color: rgba(255, 255, 255, 0.5);
+  --cm-opacity-bg-color: rgba(0, 0, 0, 0.1);
 }
 :root.dark {
   --cm-header-text-color: #ffffff;
@@ -45,4 +46,6 @@ $--colors: (
   --cm-header-bg-color: #232326;
   --cm-footer-bg-color: #232326;
   --cm-content-bg-color: #2b2b2b;
+
+  --cm-opacity-bg-color: rgba(0, 0, 0, 0.3);
 }
