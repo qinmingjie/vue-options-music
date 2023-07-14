@@ -1,22 +1,39 @@
-export const storageActions = {
-  get(name) {
+class StorageActions {
+  getStorage(name) {
     let data = localStorage.getItem(name);
     try {
       data = JSON.parse(data);
-    } catch (err) {
-      throw err.message;
+    } catch (error) {
+      data = null;
     }
     return data;
-  },
-  set({ data, name }) {
-    data = JSON.stringify(data);
-    localStorage.setItem(name, data);
-    return data;
-  },
-  remove(name) {
+  }
+
+  setStorage(name, data) {
+    localStorage.setItem(name, JSON.stringify(data));
+  }
+
+  removeStorage(name) {
     localStorage.removeItem(name);
-  },
-  clear() {
+  }
+
+  clearStorage() {
     localStorage.clear();
   }
-};
+}
+
+export function customInterval(callback, delay) {
+  let timeId;
+  function interval() {
+    callback.call(this);
+    timeId = setTimeout(interval, delay);
+  }
+
+  timeId = setTimeout(interval, delay);
+
+  return () => {
+    clearTimeout(timeId);
+  };
+}
+
+export const storageAction = new StorageActions();

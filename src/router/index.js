@@ -92,15 +92,6 @@ const routes = [
         name: "search",
         component: () => import("@/views/search/index.vue"),
         meta: { title: "搜索", isAsideMenu: false, requiresAuth: false },
-        redirect: (to) => {
-          return {
-            name: "search-song",
-            params: {
-              keywords: to.query.keywords
-            },
-            query: {}
-          };
-        },
         children: [
           {
             path: "search-song/:keywords",

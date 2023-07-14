@@ -1,5 +1,5 @@
 import axios from "axios";
-import { storageActions } from "@/utils/tool";
+import { storageAction } from "@/utils/tool";
 import { ElMessage } from "element-plus";
 
 const request = axios.create({
@@ -13,7 +13,7 @@ const request = axios.create({
 request.interceptors.request.use(
   (config) => {
     const { isTimeStamp, isCookie } = config;
-    const cookie = storageActions.get("USER")?.token;
+    const cookie = storageAction.getStorage("TOKEN");
     // 添加cookie和timestamp
     if (config.method === "get") {
       !config.params && (isTimeStamp || isCookie) && (config.params = {});
@@ -31,28 +31,28 @@ request.interceptors.request.use(
     return Promise(error);
   }
 );
-
+let errorLive = null;
 request.interceptors.response.use(
   (config) => {
     const code = config.data.code;
+    const message = config.data?.msg || config.data?.message || "未知错误!";
     // 服务器响应状态码判断
     if (code && code !== 200 && !(code >= 801 && code <= 803)) {
-      ElMessage.error(
-        config.data?.msg || `code:${code}, 未知错误,请联系管理员!`
-      );
+      ElMessage.error(`${code} ${message}`);
     }
     return config;
   },
   (error) => {
-    // if (error.response) {
-    //   ElMessage.error(
-    //     `${error.response.status} ${
-    //       error.response.message || "未知错误,请联系管理员!"
-    //     }`
-    //   );
-    // } else {
-    //   ElMessage.error(error.message);
-    // }
+    // 防止多个接口错误同时弹出太多错误弹窗
+    if (!errorLive) {
+      errorLive = ElMessage({
+        type: "error",
+        message: error.message,
+        onClose() {
+          errorLive = null;
+        }
+      });
+    }
     return Promise.reject(error);
   }
 );

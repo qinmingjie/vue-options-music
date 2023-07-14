@@ -9,7 +9,7 @@
       </div>
     </template>
     <template v-if="true">
-      <span class="login">登陆</span>
+      <span class="login" @click="$login.open">登陆</span>
     </template>
     <div class="action-flex">
       <el-switch
