@@ -78,27 +78,26 @@ export default {
 
     // 初始化二维码并检查二维码状态
     async initQrImg() {
-      let unikey, qrimg;
       this.loading = this.status = true;
 
-      // 获取二维码图片
       try {
-        unikey = await this.handleQrKey();
-        qrimg = await this.handleQrImg(unikey);
+        // 获取二维码图片
+        const unikey = await this.handleQrKey();
+        const qrimg = await this.handleQrImg(unikey);
         this.loading = false;
+
+        // 初始化二维码和轮询检查二维码状态
+        this.qrimg = qrimg;
+        const { status = true } = await store.dispatch("getAuthStatus", unikey);
+        this.status = status;
+        status && this.authSuccess();
+        store.commit("REMOVE_CUSINTERVAL");
       } catch (error) {
         this.status = false;
         this.loading = false;
+        store.commit("REMOVE_CUSINTERVAL");
         console.error(error);
-        return;
       }
-
-      // 初始化二维码和轮询检查二维码状态
-      this.qrimg = qrimg;
-      const { status = true } = await store.dispatch("getAuthStatus", unikey);
-      this.status = status;
-      status && this.authSuccess();
-      store.commit("REMOVE_CUSINTERVAL");
     }
   }
 };

@@ -21,6 +21,7 @@ class StorageActions {
     localStorage.clear();
   }
 }
+export const storageAction = new StorageActions();
 
 export function customInterval(callback, delay) {
   let timeId;
@@ -35,5 +36,3 @@ export function customInterval(callback, delay) {
     clearTimeout(timeId);
   };
 }
-
-export const storageAction = new StorageActions();

@@ -1,6 +1,8 @@
+import { ElMessage } from "element-plus";
+
 import { storageAction, customInterval } from "@/utils/tool";
 import { getqrStatus } from "@/api/user";
-import { ElMessage } from "element-plus";
+
 export default {
   state: {
     token: storageAction.getStorage("TOKEN"),
@@ -42,14 +44,14 @@ export default {
             // 授权成功写入storage返回{staus: true}用于展示刷新二维码
             if (code === 803) {
               storageAction.setStorage("TOKEN", cookie);
-              storageAction.setStorage("CREATE_TIME", new Date().getTime());
+              storageAction.setStorage("CREATE_NAME", new Date().getTime());
               storageAction.setStorage("THEME", "default");
               commit("SET_TOKEN", cookie);
               ElMessage.success("登陆成功!");
               return resolve({ status: true });
             }
           } catch (error) {
-            resolve({ error, auth: false });
+            resolve({ error, status: false });
             throw new Error(error);
           }
         }, 1000);
