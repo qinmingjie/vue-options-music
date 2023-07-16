@@ -1,7 +1,8 @@
 import { ElMessage } from "element-plus";
 
-import { storageAction, customInterval } from "@/utils/tool";
-import { getqrStatus } from "@/api/user";
+import { storageAction, customInterval, generatorRouters } from "@/utils/tool";
+import { getqrStatus, getUserStatus, getUserDetail } from "@/api/user";
+import router, { asyncRoutes } from "@/router/index";
 
 export default {
   state: {
@@ -44,7 +45,7 @@ export default {
             // 授权成功写入storage返回{staus: true}用于展示刷新二维码
             if (code === 803) {
               storageAction.setStorage("TOKEN", cookie);
-              storageAction.setStorage("CREATE_NAME", new Date().getTime());
+              storageAction.setStorage("CREATE_TIME", new Date().getTime());
               storageAction.setStorage("THEME", "default");
               commit("SET_TOKEN", cookie);
               ElMessage.success("登陆成功!");
@@ -56,6 +57,32 @@ export default {
           }
         }, 1000);
       });
+    },
+    // 获取用户信息
+    async getUserInfo({ commit }) {
+      try {
+        const { data } = await getUserStatus();
+        const res = await getUserDetail({ uid: data?.data?.account?.id });
+        if (res.data.profile) {
+          res.data.profile.roles = ["admin"];
+          commit("SET_INFO", res.data.profile);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    // 设置异步路由
+    async setAsyncRouter({ dispatch, getters }) {
+      await dispatch("getUserInfo");
+      const accessRouter = generatorRouters(asyncRoutes, getters.userRoles);
+      await accessRouter.forEach((item) => {
+        router.addRoute("home", item);
+      });
+    }
+  },
+  getters: {
+    userRoles(state) {
+      return state.info?.roles || [];
     }
   }
 };

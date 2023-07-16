@@ -24,3 +24,20 @@ export function getqrStatus(params) {
     isTimeStamp: true
   });
 }
+
+export function getUserStatus(data) {
+  return request({
+    url: "/login/status",
+    method: "POST",
+    data,
+    isCookie: true
+  });
+}
+
+export function getUserDetail(params) {
+  return request({
+    url: "/user/detail",
+    method: "GET",
+    params
+  });
+}

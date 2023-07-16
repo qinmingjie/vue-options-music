@@ -1,5 +1,9 @@
-import Layout from "@/layout/index.vue";
 import { createRouter, createWebHistory } from "vue-router";
+
+import Layout from "@/layout/index.vue";
+import { example as LoginApp } from "@/components/login/index";
+import { getStatus } from "@/utils/tool";
+import store from "@/store/index";
 
 const routes = [
   {
@@ -192,6 +196,26 @@ export const asyncRoutes = [
 const router = createRouter({
   routes,
   history: createWebHistory()
+});
+
+let isAdd = false;
+router.beforeEach(async (to, from, next) => {
+  document.title = to.meta?.title || "music";
+  const isLogin = getStatus();
+  if (isLogin) {
+    if (!isAdd) {
+      await store.dispatch("setAsyncRouter");
+      isAdd = true;
+      return next(to.fullPath);
+    }
+    next();
+  } else {
+    if (!store.state.user.isSkip) {
+      await LoginApp.open();
+      return next(to.fullPath);
+    }
+    next();
+  }
 });
 
 export default router;

@@ -35,6 +35,7 @@
 <script>
 import { getqrKey, getqrCode } from "@/api/user";
 import store from "@/store/index";
+import router from "@/router/index";
 export default {
   name: "LoginComp",
   components: {},
@@ -43,7 +44,8 @@ export default {
       visible: false,
       qrimg: "", // 二维码图片base64
       status: true, // 二维码状态
-      loading: true
+      loading: true,
+      currentRouter: router.currentRoute.value
     };
   },
   created() {},
@@ -51,15 +53,17 @@ export default {
   methods: {
     async open() {
       this.visible = true;
-      this.initQrImg();
+      await this.initQrImg();
     },
-    cancel() {
+    async cancel() {
       this.visible = false;
       store.commit("REMOVE_CUSINTERVAL");
       store.commit("SET_SKIP", true);
+      router.push(this.currentRouter);
     },
-    authSuccess() {
+    async authSuccess() {
       this.visible = false;
+      await store.dispatch("getUserInfo");
     },
 
     // 获取key
