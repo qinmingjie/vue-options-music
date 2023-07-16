@@ -12,13 +12,7 @@
       <span class="login" @click="$login.open">登陆</span>
     </template>
     <div class="action-flex">
-      <el-switch
-        v-model="theme"
-        inline-prompt
-        active-value="default"
-        inactive-value="dark"
-        @change="toggleTheme"
-      />
+      <el-switch v-model="theme" inline-prompt active-value="default" inactive-value="dark" @change="toggleTheme" />
     </div>
   </div>
 </template>

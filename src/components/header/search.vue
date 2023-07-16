@@ -6,12 +6,7 @@
         <el-icon class="next"><IEpArrowRight /></el-icon>
       </el-col>
       <el-col :span="12" :lg="6" :md="8" :xs="20">
-        <el-input
-          v-model.trim="keywords"
-          class="w-50 m-2"
-          placeholder="Type something"
-          style="width: 100%"
-        />
+        <el-input v-model.trim="keywords" class="w-50 m-2" placeholder="Type something" style="width: 100%" />
       </el-col>
     </el-row>
   </div>
