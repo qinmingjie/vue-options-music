@@ -25,6 +25,10 @@ $--colors: (
 @use "./dark.scss";
 
 :root {
+  --el-menu-item-height: 30px;
+  --el-header-height: 60px;
+  --el-footer-height: 60px;
+
   --cm-header-text-color: #ffffff;
   --cm-content-text-color: #ffffff;
   --cm-aside-text-color: #ffffff;

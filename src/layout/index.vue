@@ -5,7 +5,9 @@
         <HeaderComp />
       </el-header>
       <el-container class="cm-content">
-        <el-aside class="cm-aside"></el-aside>
+        <el-aside class="cm-aside">
+          <AsideComp />
+        </el-aside>
         <el-main class="cm-main">
           <router-view></router-view>
         </el-main>
@@ -17,9 +19,10 @@
 
 <script>
 import HeaderComp from "@/components/header/index.vue";
+import AsideComp from "@/components/aside/index.vue";
 export default {
   name: "LayoutIndex",
-  components: { HeaderComp }
+  components: { HeaderComp, AsideComp }
 };
 </script>
 

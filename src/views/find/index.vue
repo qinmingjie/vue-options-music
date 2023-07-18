@@ -38,9 +38,7 @@ export default {
   },
   computed: {},
   methods: {},
-  created() {
-    console.log(this.$router.getRoutes());
-  },
+  created() {},
   mounted() {},
   watch: {}
 };

@@ -41,3 +41,12 @@ export function getUserDetail(params) {
     params
   });
 }
+
+export function getUserPlaylist(data) {
+  return request({
+    url: "/user/playlist",
+    method: "POST",
+    data,
+    isCookie: true
+  });
+}
