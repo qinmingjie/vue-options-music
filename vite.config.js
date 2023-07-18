@@ -2,6 +2,7 @@ import { fileURLToPath, URL } from "node:url";
 
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
+import esbuild from "rollup-plugin-esbuild";
 
 // element按需加载
 import AutoImport from "unplugin-auto-import/vite";
@@ -26,16 +27,27 @@ export default defineConfig({
       resolvers: [IconsResolver({ prefix: "Icon" }), ElementPlusResolver()]
     }),
     Components({
-      resolvers: [
-        IconsResolver({ enabledCollections: ["ep"] }),
-        ElementPlusResolver({ importStyle: "sass" })
-      ]
+      resolvers: [IconsResolver({ enabledCollections: ["ep"] }), ElementPlusResolver({ importStyle: "sass" })]
     }),
-    Icons({ autoInstall: true })
+    Icons({ autoInstall: true }),
+    {
+      ...esbuild({
+        target: "chrome70",
+        // 如有需要可以在这里加 js ts 之类的其他后缀
+        include: [/\.vue$/, /\.js$/],
+        loaders: {
+          ".vue": "js"
+        }
+      }),
+      enforce: "post"
+    }
   ],
   resolve: {
     alias: {
       "@": fileURLToPath(new URL("./src", import.meta.url))
     }
+  },
+  server: {
+    host: "0.0.0.0"
   }
 });
