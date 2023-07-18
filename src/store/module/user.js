@@ -3,6 +3,7 @@ import { ElMessage } from "element-plus";
 import { storageAction, customInterval, generatorRouters } from "@/utils/tool";
 import { getqrStatus, getUserStatus, getUserDetail } from "@/api/user";
 import router, { asyncRoutes } from "@/router/index";
+import { example as loginApp } from "@/components/login";
 
 export default {
   state: {
@@ -62,6 +63,10 @@ export default {
     async getUserInfo({ commit }) {
       try {
         const { data } = await getUserStatus();
+        if (data?.data && !data.data?.account && !data.data?.profile) {
+          await loginApp.open();
+          return;
+        }
         const res = await getUserDetail({ uid: data?.data?.account?.id });
         if (res.data.profile) {
           res.data.profile.roles = ["admin"];

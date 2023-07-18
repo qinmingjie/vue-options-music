@@ -75,7 +75,6 @@ export default {
       return this.$router.getRoutes().filter((item) => item.meta && item.meta.isAsideMenu === true);
     },
     activePath() {
-      console.log(this.$router.currentRoute);
       return this.$route.path;
     }
   },
