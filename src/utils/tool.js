@@ -53,7 +53,7 @@ export function getStatus() {
 }
 
 export function hasPermission(item, roles) {
-  if (item.meta && roles.length) {
+  if (item.meta && item.meta.roles && roles.length) {
     return roles.some((role) => item.meta.roles.includes(role));
   }
   return false;
