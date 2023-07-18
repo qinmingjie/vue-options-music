@@ -16,40 +16,7 @@ const routes = [
         path: "/find",
         name: "find",
         component: () => import("@/views/find/index.vue"),
-        redirect: "/find/recommend",
-        meta: { title: "发现音乐", isAsideMenu: true, requiresAuth: false },
-        children: [
-          {
-            path: "recommend",
-            name: "recommend",
-            component: () => import("@/views/find/recommend.vue"),
-            meta: { title: "热门推荐", isAsideMenu: false, requiresAuth: false }
-          },
-          {
-            path: "rank-list",
-            name: "rank-list",
-            component: () => import("@/views/find/rank-list.vue"),
-            meta: { title: "排行榜", isAsideMenu: false, requiresAuth: false }
-          },
-          {
-            path: "playlist/:tag",
-            name: "playlist",
-            component: () => import("@/views/find/playlist.vue"),
-            meta: { title: "歌单", isAsideMenu: false, requiresAuth: false }
-          },
-          {
-            path: "singer-list",
-            name: "singer-list",
-            component: () => import("@/views/find/singer-list.vue"),
-            meta: { title: "歌手", isAsideMenu: false, requiresAuth: false }
-          },
-          {
-            path: "new-disc",
-            name: "new-disc",
-            component: () => import("@/views/find/new-disc.vue"),
-            meta: { title: "新碟上架", isAsideMenu: false, requiresAuth: false }
-          }
-        ]
+        meta: { title: "发现音乐", isAsideMenu: true, requiresAuth: false }
       },
       {
         path: "playlist-detail/:id",

@@ -1,6 +1,6 @@
 <template>
   <el-scrollbar>
-    <el-menu router unique-opened class="cm-menu">
+    <el-menu class="cm-menu" router unique-opened :default-active="activePath">
       <el-menu-item v-for="menu in menus" :key="menu.name" :index="menu.path" :disabled="menu.disabled">
         {{ menu.title }}
         <template v-if="menu.children && menu.children.length">
@@ -73,6 +73,10 @@ export default {
     }),
     routes() {
       return this.$router.getRoutes().filter((item) => item.meta && item.meta.isAsideMenu === true);
+    },
+    activePath() {
+      console.log(this.$router.currentRoute);
+      return this.$route.path;
     }
   },
   methods: {
