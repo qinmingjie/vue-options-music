@@ -48,6 +48,8 @@ export function getStatus() {
   let loginStatus = false;
   if (token && timeDifference < expires) {
     loginStatus = true;
+  } else {
+    storageAction.clearStorage();
   }
   return loginStatus;
 }

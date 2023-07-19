@@ -1,7 +1,7 @@
 import { ElMessage } from "element-plus";
 
 import { storageAction, customInterval, generatorRouters } from "@/utils/tool";
-import { getqrStatus, getUserStatus, getUserDetail } from "@/api/user";
+import { getqrStatus, getUserStatus, getUserDetail, getUserPlaylist } from "@/api/user";
 import router, { asyncRoutes } from "@/router/index";
 import { example as loginApp } from "@/components/login";
 
@@ -10,7 +10,9 @@ export default {
     token: storageAction.getStorage("TOKEN"),
     isSkip: false, // 是否跳过登陆
     info: null, // 用户信息
-    clear: null
+    clear: null, // 二维码轮询计时器清除
+    createPlaylist: [], // 用户创建的歌单
+    collectPlaylist: [] // 用户收藏的歌单
   },
   mutations: {
     SET_TOKEN(state, token) {
@@ -27,6 +29,12 @@ export default {
     },
     REMOVE_CUSINTERVAL(state) {
       state.clear && state.clear();
+    },
+    SET_CREATE_PLAYLIST(state, playlist) {
+      state.createPlaylist.push(playlist);
+    },
+    SET_COLLECT_PLAYLIST(state, collect) {
+      state.collectPlaylist.push(collect);
     }
   },
   actions: {
@@ -82,6 +90,15 @@ export default {
       const accessRouter = generatorRouters(asyncRoutes, getters.userRoles);
       await accessRouter.forEach((item) => {
         router.addRoute("home", item);
+      });
+    },
+    // 获取用户歌单
+    async handlePlaylist({ state, commit }) {
+      const res = await getUserPlaylist({ uid: state.info?.userId });
+      const playlist = res.data.playlist || [];
+      playlist.forEach((item) => {
+        item.subscribed && commit("SET_COLLECT_PLAYLIST", item);
+        !item.subscribed && commit("SET_CREATE_PLAYLIST", item);
       });
     }
   },

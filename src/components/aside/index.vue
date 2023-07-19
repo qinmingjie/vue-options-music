@@ -53,8 +53,7 @@
 </template>
 
 <script>
-import { getUserPlaylist } from "@/api/user";
-import { mapState } from "vuex";
+import { mapState, mapActions } from "vuex";
 export default {
   name: "AsideIndex",
   props: {},
@@ -62,14 +61,14 @@ export default {
   data() {
     return {
       menus: [],
-      subMenu: [],
-      createPlaylist: [], // 用户创建的歌单
-      collectPlaylist: [] // 用户收藏的歌单
+      subMenu: []
     };
   },
   computed: {
     ...mapState({
-      info: (state) => state.user.info
+      info: (state) => state.user.info,
+      createPlaylist: (state) => state.user.createPlaylist,
+      collectPlaylist: (state) => state.user.collectPlaylist
     }),
     routes() {
       return this.$router.getRoutes().filter((item) => item.meta && item.meta.isAsideMenu === true);
@@ -79,6 +78,9 @@ export default {
     }
   },
   methods: {
+    ...mapActions({
+      handlePlaylist: "handlePlaylist"
+    }),
     // 菜单
     handleMenu(routes) {
       const menu = [];
@@ -103,26 +105,14 @@ export default {
       this.subMenu = subMenu;
       this.menus = menu.filter((item) => !childrenArr.some((child) => child.name === item.name));
       return menu;
-    },
-
-    // 用户歌单
-    async handlePlaylist() {
-      const res = await getUserPlaylist({ uid: this.info?.userId });
-      const playlist = res.data.playlist || [];
-      playlist.forEach((item) => {
-        item.subscribed && this.collectPlaylist.push(item);
-        !item.subscribed && this.createPlaylist.push(item);
-      });
     }
   },
-  created() {
-    this.handleMenu(this.routes);
-  },
+  created() {},
   mounted() {},
   watch: {
     info: {
       async handler(newVal) {
-        newVal && (await this.handleMenu(this.routes));
+        await this.handleMenu(this.routes);
         newVal && (await this.handlePlaylist());
       },
       immediate: true
