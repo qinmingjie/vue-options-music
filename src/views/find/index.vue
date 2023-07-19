@@ -1,25 +1,34 @@
 <template>
   <div>
-    <span v-for="tab in links" :key="tab.path" @click="currentTab = tab.component">{{ tab.name }}</span>
+    <TitleLink :ani="true">
+      <template #default>
+        <span
+          v-for="link in links"
+          :key="link.path"
+          @click="currentLink = link.component"
+          :class="{ active: currentLink === link.component }"
+          >{{ link.name }}</span
+        >
+      </template>
+    </TitleLink>
     <keep-alive>
       <component :is="currentComp"></component>
     </keep-alive>
   </div>
 </template>
 <script>
-import Recommend from "./recommend.vue";
-import PlayList from "./playlist.vue";
-import RankList from "./rank-list.vue";
-import NewDisc from "./new-disc.vue";
-import SingerList from "./singer-list.vue";
+import { defineAsyncComponent } from "vue";
+import TitleLink from "@/components/title-link/index.vue";
 
 export default {
   name: "FindIndex",
   props: {},
-  components: {},
+  components: {
+    TitleLink
+  },
   data() {
     return {
-      currentTab: "Recommend",
+      currentLink: "Recommend",
       links: [
         {
           name: "个性推荐",
@@ -51,14 +60,14 @@ export default {
   },
   computed: {
     currentComp() {
-      const tabs = {
-        Recommend,
-        PlayList,
-        RankList,
-        NewDisc,
-        SingerList
+      const comps = {
+        Recommend: defineAsyncComponent(() => import("./recommend.vue")),
+        PlayList: defineAsyncComponent(() => import("./playlist.vue")),
+        RankList: defineAsyncComponent(() => import("./rank-list.vue")),
+        NewDisc: defineAsyncComponent(() => import("./new-disc.vue")),
+        SingerList: defineAsyncComponent(() => import("./singer-list.vue"))
       };
-      return tabs[this.currentTab];
+      return comps[this.currentLink];
     }
   },
   methods: {},
