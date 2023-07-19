@@ -9,7 +9,7 @@
         </el-col>
       </el-row>
       <el-row align="middle" class="expand">
-        <el-col :span="24">
+        <el-col :span="24" @click="changeExpand">
           <el-icon><IEpExpand /></el-icon>
         </el-col>
       </el-row>
@@ -33,9 +33,15 @@ export default {
     SearchComp,
     Profile
   },
+  props: ["modelValue"],
+  emits: ["update:modelValue"],
   created() {},
   computed: {},
-  methods: {}
+  methods: {
+    changeExpand() {
+      this.$emit("update:modelValue", true);
+    }
+  }
 };
 </script>
 

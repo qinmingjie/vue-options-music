@@ -2,7 +2,7 @@
   <div class="layout-comp">
     <el-container>
       <el-header class="cm-header">
-        <HeaderComp />
+        <HeaderComp v-model="isExpand" />
       </el-header>
       <el-container class="cm-content">
         <el-aside class="cm-aside">
@@ -14,6 +14,16 @@
       </el-container>
       <el-footer class="cm-footer"></el-footer>
     </el-container>
+    <el-drawer
+      v-model="isExpand"
+      :with-header="false"
+      direction="ltr"
+      size="200px"
+      :before-close="closeAside"
+      class="aside-drawer"
+    >
+      <AsideComp />
+    </el-drawer>
   </div>
 </template>
 
@@ -22,7 +32,17 @@ import HeaderComp from "@/components/header/index.vue";
 import AsideComp from "@/components/aside/index.vue";
 export default {
   name: "LayoutIndex",
-  components: { HeaderComp, AsideComp }
+  components: { HeaderComp, AsideComp },
+  data() {
+    return {
+      isExpand: false
+    };
+  },
+  methods: {
+    closeAside() {
+      this.isExpand = false;
+    }
+  }
 };
 </script>
 
@@ -66,6 +86,9 @@ export default {
   box-sizing: border-box;
   overflow: hidden;
   border-right: 1px solid var(--el-border-color);
+}
+.el-drawer__body {
+  padding-top: 100px;
 }
 @media (max-width: 1200px) {
   .cm-aside {

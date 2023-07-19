@@ -11,4 +11,7 @@ body {
   margin: 0;
   padding: 0;
 }
+.aside-drawer .el-drawer__body {
+  padding-right: 0;
+}
 </style>

@@ -79,3 +79,30 @@ export function generatorRouters(asyncRoutes, roles) {
   });
   return routes;
 }
+
+export function debouce(fn, delay) {
+  let timer = null;
+  return function () {
+    const _this = this;
+    const _args = arguments;
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      fn.call(_this, _args);
+      timer = null;
+    }, delay);
+  };
+}
+
+export function throttle(fn, delay) {
+  let timer = null;
+  return function () {
+    const _this = this;
+    const _args = arguments;
+    if (!timer) {
+      timer = setTimeout(() => {
+        fn.call(_this, _args);
+        timer = null;
+      }, delay);
+    }
+  };
+}
