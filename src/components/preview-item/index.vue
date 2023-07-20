@@ -1,0 +1,147 @@
+<template>
+  <div class="preview-item">
+    <div class="preview-img" ref="previewImg">
+      <el-image :src="info.picUrl" loading="lazy" />
+      <span class="play" v-if="isShow('playIcon')" :style="{ left: iconPosition[0], top: iconPosition[1] }">
+        <el-icon><IEpCaretRight /></el-icon>
+      </span>
+      <span class="play-count" v-if="isShow('playCount')">{{ playCount }}</span>
+      <span class="mask" v-if="isShow('mask')"></span>
+    </div>
+    <p class="name" v-if="isShow('name')">{{ info.name }}{{ imgWidth }}</p>
+  </div>
+</template>
+
+<script>
+import { formatPlayCount } from "@/utils/tool";
+export default {
+  name: "PreiewItem",
+  props: {
+    info: {
+      type: Object,
+      required: true,
+      default() {
+        return {};
+      }
+    },
+    show: {
+      type: Array,
+      default() {
+        return ["name", "playIcon", "playCount", "mask"];
+      }
+    },
+    iconPosition: {
+      type: Array,
+      default() {
+        return ["76%", "76%"];
+      }
+    }
+  },
+  components: {},
+  data() {
+    return {
+      imgWidth: ""
+    };
+  },
+  computed: {
+    playCount() {
+      return formatPlayCount(this.info.playcount || this.info.playCount);
+    },
+    isShow() {
+      return (type) => {
+        return this.show.some((item) => item === type);
+      };
+    }
+  },
+  methods: {},
+  created() {},
+  mounted() {},
+  watch: {}
+};
+</script>
+
+<style lang="scss" scoped>
+.preview-item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  .preview-img {
+    flex: 1;
+    width: 100%;
+    border-radius: 10px;
+    position: relative;
+    margin-bottom: 10px;
+    cursor: pointer;
+    .play-count {
+      position: absolute;
+      z-index: 2;
+      color: rgba(255, 255, 255, 0.9);
+      right: 10px;
+      top: 4px;
+      font-size: 0.8em;
+    }
+    .mask {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      border-radius: 10px;
+      background-color: rgba(0, 0, 0, 0.2);
+      opacity: 0;
+    }
+    &:hover {
+      .mask,
+      .play {
+        opacity: 1;
+        transition: all 0.6s;
+      }
+    }
+  }
+  .el-image {
+    border-radius: 10px;
+    box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.2);
+    display: block;
+  }
+  .play {
+    width: 18%;
+    height: 18%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    z-index: 3;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 50%;
+    color: $color-primary;
+    opacity: 0;
+    .el-icon {
+      display: inline-block;
+      width: 60%;
+      height: 60%;
+      svg {
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
+  .name {
+    margin-top: 0;
+    font-size: 0.9em;
+    opacity: 0.9;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 1.2em;
+    cursor: pointer;
+    &:hover {
+      opacity: 1;
+    }
+  }
+}
+</style>
