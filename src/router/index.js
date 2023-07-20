@@ -16,7 +16,40 @@ const routes = [
         path: "/find",
         name: "find",
         component: () => import("@/views/find/index.vue"),
-        meta: { title: "发现音乐", isAsideMenu: true, requiresAuth: false }
+        meta: { title: "发现音乐", isAsideMenu: true, requiresAuth: false },
+        redirect: "/find/recommend",
+        children: [
+          {
+            path: "recommend",
+            name: "recommend",
+            component: () => import("@/views/find/recommend.vue"),
+            meta: { title: "热门推荐" }
+          },
+          {
+            path: "rank-list",
+            name: "rank-lint",
+            component: () => import("@/views/find/rank-list.vue"),
+            meta: { title: "排行榜" }
+          },
+          {
+            path: "playlist/:type",
+            name: "playlist",
+            component: () => import("@/views/find/playlist.vue"),
+            meta: { title: "歌单" }
+          },
+          {
+            path: "singer-list",
+            name: "singer-list",
+            component: () => import("@/views/find/singer-list.vue"),
+            meta: { title: "歌手" }
+          },
+          {
+            path: "new-disc",
+            name: "new-disc",
+            component: () => import("@/views/find/new-disc.vue"),
+            meta: { title: "新碟上架" }
+          }
+        ]
       },
       {
         path: "playlist-detail/:id",

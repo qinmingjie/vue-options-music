@@ -1,23 +1,28 @@
 <template>
-  <div>
-    <TitleLink :ani="true">
+  <div class="find-container">
+    <TitleLink class="find-title" :options="{ ani: true, isCursor: true }">
       <template #default>
-        <span
-          v-for="link in links"
-          :key="link.path"
-          @click="currentLink = link.component"
-          :class="{ active: currentLink === link.component }"
-          >{{ link.name }}</span
-        >
+        <router-link v-for="link in links" :to="link.path" :key="link.path" custom v-slot="{ navigate, isActive }">
+          <span @click="navigate" @keypress.enter="navigate" role="link" :class="{ active: isActive }">
+            {{ link.name }}
+          </span>
+        </router-link>
       </template>
     </TitleLink>
-    <keep-alive>
-      <component :is="currentComp"></component>
-    </keep-alive>
+    <el-scrollbar>
+      <el-row justify="center" class="find-content">
+        <el-col :lg="18" :md="24" :sm="24" :xs="24">
+          <router-view #="{ Component }">
+            <keep-alive>
+              <component :is="Component"></component>
+            </keep-alive>
+          </router-view>
+        </el-col>
+      </el-row>
+    </el-scrollbar>
   </div>
 </template>
 <script>
-import { defineAsyncComponent } from "vue";
 import TitleLink from "@/components/title-link/index.vue";
 
 export default {
@@ -28,52 +33,56 @@ export default {
   },
   data() {
     return {
-      currentLink: "Recommend",
       links: [
         {
           name: "个性推荐",
-          path: "/find/recommend",
-          component: "Recommend"
+          path: "/find/recommend"
         },
         {
           name: "排行榜",
-          path: "/find/rank-list",
-          component: "RankList"
+          path: "/find/rank-list"
         },
         {
           name: "歌单",
-          path: "/find/playlist/华语",
-          component: "PlayList"
+          path: "/find/playlist/华语"
         },
         {
           name: "歌手",
-          path: "/find/singer-list",
-          component: "SingerList"
+          path: "/find/singer-list"
         },
         {
           name: "新碟上架",
-          path: "/find/new-disc",
-          component: "NewDisc"
+          path: "/find/new-disc"
         }
       ]
     };
   },
-  computed: {
-    currentComp() {
-      const comps = {
-        Recommend: defineAsyncComponent(() => import("./recommend.vue")),
-        PlayList: defineAsyncComponent(() => import("./playlist.vue")),
-        RankList: defineAsyncComponent(() => import("./rank-list.vue")),
-        NewDisc: defineAsyncComponent(() => import("./new-disc.vue")),
-        SingerList: defineAsyncComponent(() => import("./singer-list.vue"))
-      };
-      return comps[this.currentLink];
-    }
-  },
+  computed: {},
   methods: {},
   created() {},
   mounted() {},
   watch: {}
 };
 </script>
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.find-container {
+  position: relative;
+  padding-top: calc(20px + 1.2em);
+  height: 100%;
+  box-sizing: border-box;
+  .find-title {
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    background-color: #fff;
+    height: 20px;
+    padding-bottom: 1.2em;
+    margin-bottom: 0;
+  }
+  .find-content {
+    height: calc(100% - 20px - 1.2em);
+  }
+}
+</style>

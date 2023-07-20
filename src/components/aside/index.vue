@@ -74,6 +74,9 @@ export default {
       return this.$router.getRoutes().filter((item) => item.meta && item.meta.isAsideMenu === true);
     },
     activePath() {
+      if (this.$route.path.search("find") !== -1) {
+        return "/find";
+      }
       return this.$route.path;
     }
   },

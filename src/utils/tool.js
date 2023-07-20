@@ -106,3 +106,36 @@ export function throttle(fn, delay) {
     }
   };
 }
+
+export function formatPlayCount(num) {
+  const tenThousand = Math.pow(10, 4);
+  let result = "";
+  if (num < tenThousand) {
+    result = num;
+  } else if (num >= tenThousand && num < tenThousand * tenThousand - 1 && num % tenThousand < tenThousand) {
+    result = `${Math.round(num / tenThousand)}万`;
+  } else {
+    result = `${Math.round(num / (tenThousand * tenThousand))}亿`;
+  }
+  return result;
+}
+
+export function chunkArray(arr = [], size = 0) {
+  if (!Array.isArray(arr)) return;
+  let newArr = [];
+  let chunk = [];
+  let n = 0;
+  arr.forEach((item, index) => {
+    index++;
+    chunk.push(item);
+    if (index % size === 0) {
+      newArr.push(chunk);
+      chunk = [];
+      n++;
+    }
+  });
+  if (n * size !== arr.length) {
+    newArr.push(chunk);
+  }
+  return newArr;
+}

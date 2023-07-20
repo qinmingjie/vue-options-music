@@ -1,14 +1,19 @@
 <template>
-  <div class="title-link-container" :style="{ justifyContent: justify }">
-    <div :class="{ 'title-links': true, ani }">
-      <slot name="default" :options="options">
+  <div
+    :class="{ 'title-link-container': true, 'no-cursor': options.hidCursor }"
+    :style="{ justifyContent: options.justify }"
+  >
+    <div :class="{ 'title-links': true, ani: options.ani, 'text-bold': options.isBold }">
+      <slot name="default">
         <template v-if="links.length">
-          <span v-for="link in links" :key="link.path">{{ link.name }}</span>
+          <span v-for="link in links" :key="link.path" @click="jump(link.path)">{{ link.name }}</span>
         </template>
       </slot>
     </div>
-    <div class="title-link-icon" v-show="isShowIcon">
-      <slot name="icon"></slot>
+    <div class="title-link-icon" v-show="options.isShowIcon" @click="jump(link.path)">
+      <slot name="icon">
+        <el-icon><IEpArrowRightBold /></el-icon>
+      </slot>
     </div>
   </div>
 </template>
@@ -20,27 +25,29 @@ export default {
     links: {
       type: Array
     },
-    isShowIcon: {
-      type: Boolean,
-      default: false
-    },
-    justify: {
-      type: String,
-      default: "flex-start"
-    },
-    ani: {
-      type: Boolean,
-      default: false
+    options: {
+      type: Object,
+      default() {
+        return {
+          isShowIcon: false,
+          justify: "flex-start",
+          ani: false,
+          isBold: false,
+          hidCursor: false
+        };
+      }
     }
   },
   components: {},
   data() {
-    return {
-      options: { name: "hmm", age: 12 }
-    };
+    return {};
   },
   computed: {},
-  methods: {},
+  methods: {
+    jump(path) {
+      path && this.$router.push(path);
+    }
+  },
   created() {},
   mounted() {},
   watch: {}
@@ -52,14 +59,25 @@ export default {
   display: flex;
   align-items: flex-end;
   margin-bottom: 1.2em;
+  font-size: 1.2em;
+  &.no-cursor {
+    span {
+      cursor: auto;
+    }
+    .title-links {
+      ::v-deep span {
+        cursor: initial;
+      }
+    }
+  }
   span {
     cursor: pointer;
   }
   .title-links {
     ::v-deep span {
       position: relative;
-      margin-right: 20px;
       cursor: pointer;
+      margin-right: 20px;
       &:last-of-type {
         margin-right: 0;
       }
@@ -68,7 +86,6 @@ export default {
   .title-links.ani {
     ::v-deep span {
       &.active {
-        font-size: 1.2em;
         font-weight: bold;
         padding-bottom: 4px;
         &::after {
@@ -83,6 +100,19 @@ export default {
           transform: translateX(-50%);
         }
       }
+    }
+  }
+  .title-links.text-bold {
+    font-weight: bold;
+  }
+  .title-link-icon {
+    align-self: center;
+    display: flex;
+    justify-content: flex-start;
+    align-items: stretch;
+    .el-icon {
+      position: relative;
+      top: 1px;
     }
   }
 }

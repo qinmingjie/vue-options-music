@@ -7,8 +7,9 @@
       </span>
       <span class="play-count" v-if="isShow('playCount')">{{ playCount }}</span>
       <span class="mask" v-if="isShow('mask')"></span>
+      <span class="to-jump" @click="jump(path)"></span>
     </div>
-    <p class="name" v-if="isShow('name')">{{ info.name }}{{ imgWidth }}</p>
+    <p class="name" v-if="isShow('name')" @click="jump(path)">{{ info.name }}{{ imgWidth }}</p>
   </div>
 </template>
 
@@ -35,6 +36,9 @@ export default {
       default() {
         return ["76%", "76%"];
       }
+    },
+    path: {
+      type: String
     }
   },
   components: {},
@@ -53,7 +57,11 @@ export default {
       };
     }
   },
-  methods: {},
+  methods: {
+    jump(path) {
+      path && this.$router.push(path);
+    }
+  },
   created() {},
   mounted() {},
   watch: {}
@@ -74,11 +82,19 @@ export default {
     cursor: pointer;
     .play-count {
       position: absolute;
-      z-index: 2;
+      z-index: 3;
       color: rgba(255, 255, 255, 0.9);
       right: 10px;
       top: 4px;
       font-size: 0.8em;
+    }
+    .to-jump {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 2;
     }
     .mask {
       width: 100%;
@@ -117,7 +133,7 @@ export default {
     background-color: rgba(255, 255, 255, 0.9);
     border-radius: 50%;
     color: $color-primary;
-    opacity: 0;
+    // opacity: 0;
     .el-icon {
       display: inline-block;
       width: 60%;
