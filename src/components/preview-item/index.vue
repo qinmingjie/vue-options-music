@@ -133,7 +133,7 @@ export default {
     background-color: rgba(255, 255, 255, 0.9);
     border-radius: 50%;
     color: $color-primary;
-    // opacity: 0;
+    opacity: 0;
     .el-icon {
       display: inline-block;
       width: 60%;
