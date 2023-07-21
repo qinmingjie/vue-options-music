@@ -76,13 +76,16 @@ export default {
     top: 0;
     left: 0;
     z-index: 2;
-    background-color: #fff;
+    background-color: var(--cm-content-bg-color);
     height: 20px;
     padding-bottom: 1.2em;
     margin-bottom: 0;
   }
   .find-content {
     height: calc(100% - 20px - 1.2em);
+  }
+  .el-scrollbar {
+    padding-right: var(--el-main-padding);
   }
 }
 </style>

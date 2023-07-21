@@ -19,7 +19,7 @@ export default {
 
       // 写入视口宽度属性
       let el = document.documentElement || document.body;
-      let width = ref(el.clientHeight);
+      let width = ref(el.clientWidth);
       app.config.globalProperties.$clientWidth = width;
       window.onresize = debouce(() => {
         width.value = el.clientWidth;

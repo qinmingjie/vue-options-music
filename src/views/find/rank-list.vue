@@ -31,7 +31,7 @@
               <template v-if="main.tracks">
                 <SongTable
                   :table-data="main.tracks"
-                  :header-options="headerOptions"
+                  :header-options="tableHeader"
                   :show-header="false"
                   :playlist-id="main.id"
                 >
@@ -63,8 +63,8 @@
           <LinksComp :links="['全球榜']" :link-type="'static-title'" />
         </el-col>
       </el-row>
-      <el-row v-for="(other, index) in handleOtherList" :key="index" class="other-list-row">
-        <el-col :span="4" v-for="(item, index) in other" :key="item.id" :offset="index > 0 ? 1 : 0">
+      <el-row v-for="(other, index) in handlerList" :key="index">
+        <el-col :span="listSpan" v-for="(item, index) in other" :key="item.id" :offset="index > 0 ? listOffset : 0">
           <PreviewItem :info="item" :iconPosition="['42%', '42%']" />
         </el-col>
       </el-row>
@@ -85,7 +85,10 @@ export default {
     return {
       mainList: [],
       otherList: [],
-      headerOptions: [
+      loading: false,
+      listSpan: 4,
+      listOffset: 1,
+      tableHeader: [
         {
           slotName: "song-name",
           label: "歌曲名称",
@@ -96,8 +99,7 @@ export default {
           label: "歌手",
           prop: "ar"
         }
-      ],
-      loading: false
+      ]
     };
   },
   computed: {
@@ -106,8 +108,11 @@ export default {
         return artists && artists.map((item) => item.name).join("/");
       };
     },
-    handleOtherList() {
-      return chunkArray(this.otherList, 5);
+    clientWidth() {
+      return this.$clientWidth.value;
+    },
+    handlerList() {
+      return this.clientWidth < 400 ? chunkArray(this.otherList, 2) : chunkArray(this.otherList, 5);
     }
   },
   async created() {
@@ -116,7 +121,7 @@ export default {
       await this.getToplist();
       await this.getMainListPreviewSong();
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
     this.loading = false;
   },
@@ -127,7 +132,7 @@ export default {
       const toReserve = ["id", "name", "description", "coverImgUrl", "updateTime", "ToplistType"];
       let { list = [] } = res?.data || {};
       // 格式化数据
-      list
+      await list
         .map((item) => {
           return Object.keys(item)
             .filter((key) => toReserve.includes(key))
@@ -149,7 +154,23 @@ export default {
       });
     }
   },
-  watch: {}
+  watch: {
+    clientWidth: {
+      handler(val) {
+        if (val < 400) {
+          (this.listSpan = 10), (this.listOffset = 4);
+          this.tableHeader = [
+            {
+              slotName: "song-name",
+              label: "歌曲名称",
+              prop: "name"
+            }
+          ];
+        }
+      },
+      immediate: true
+    }
+  }
 };
 </script>
 

@@ -62,7 +62,7 @@ export default {
   display: flex;
   align-items: flex-end;
   margin-bottom: 1.2em;
-  font-size: 1.2em;
+  font-size: 1em;
   &.no-cursor {
     span {
       cursor: auto;
