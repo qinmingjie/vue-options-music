@@ -18,3 +18,21 @@ export function getLoginRecommendPlaylist(params) {
     isCookie: true
   });
 }
+
+// 获取所有排行榜
+export function getToplist(params) {
+  return request({
+    url: "/toplist",
+    method: "GET",
+    params
+  });
+}
+
+// 获取歌单详情
+export function getPlaylistDetail(params) {
+  return request({
+    url: "/playlist/detail",
+    method: "GET",
+    params
+  });
+}
