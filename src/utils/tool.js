@@ -110,6 +110,7 @@ export function throttle(fn, delay) {
 export function formatPlayCount(num) {
   const tenThousand = Math.pow(10, 4);
   let result = "";
+  if (!num) return result;
   if (num < tenThousand) {
     result = num;
   } else if (num >= tenThousand && num < tenThousand * tenThousand - 1 && num % tenThousand < tenThousand) {
