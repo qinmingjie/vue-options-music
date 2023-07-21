@@ -12,7 +12,7 @@
     </div>
     <div class="title-link-icon" v-show="options.isShowIcon" @click="jump(link.path)">
       <slot name="icon">
-        <el-icon><IEpArrowRightBold /></el-icon>
+        <el-icon><IEpArrowRight /></el-icon>
       </slot>
     </div>
   </div>
@@ -27,14 +27,17 @@ export default {
     },
     options: {
       type: Object,
-      default() {
-        return {
-          isShowIcon: false,
-          justify: "flex-start",
-          ani: false,
-          isBold: false,
-          hidCursor: false
-        };
+      default(rawProps) {
+        return Object.assign(
+          {
+            isShowIcon: false,
+            justify: "flex-start",
+            ani: false,
+            isBold: false,
+            hidCursor: false
+          },
+          rawProps || {}
+        );
       }
     }
   },
