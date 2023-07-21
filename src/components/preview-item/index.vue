@@ -9,7 +9,7 @@
       <span class="mask" v-if="isShow('mask')"></span>
       <span class="to-jump" @click="jump(path)"></span>
     </div>
-    <p class="name" v-if="isShow('name')" @click="jump(path)">{{ info.name }}{{ imgWidth }}</p>
+    <p class="name" v-if="isShow('name')" @click="jump(path)">{{ info.name }}</p>
   </div>
 </template>
 
@@ -43,9 +43,7 @@ export default {
   },
   components: {},
   data() {
-    return {
-      imgWidth: ""
-    };
+    return {};
   },
   computed: {
     playCount() {
@@ -133,7 +131,7 @@ export default {
     background-color: rgba(255, 255, 255, 0.9);
     border-radius: 50%;
     color: $color-primary;
-    opacity: 0;
+    // opacity: 0;
     .el-icon {
       display: inline-block;
       width: 60%;
