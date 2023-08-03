@@ -1,7 +1,14 @@
 <template>
   <div class="preview-item">
     <div class="preview-img" ref="previewImg">
-      <el-image :src="info.picUrl" loading="lazy" />
+      <el-image :src="info.picUrl" loading="lazy" fit="scale-down">
+        <template #placeholder>
+          <div class="image-place-slot"><img src="../../assets/img-place.png" /></div>
+        </template>
+        <template #error>
+          <div class="image-error-slot"><img src="../../assets/img-failed.png" /></div>
+        </template>
+      </el-image>
       <span class="play" v-if="isShow('playIcon')" :style="{ left: iconPosition[0], top: iconPosition[1] }">
         <el-icon><IEpCaretRight /></el-icon>
       </span>
@@ -62,7 +69,14 @@ export default {
   },
   created() {},
   mounted() {},
-  watch: {}
+  watch: {
+    $clientWidth: {
+      handler(val) {
+        console.log(val);
+      },
+      immediate: true.value
+    }
+  }
 };
 </script>
 
@@ -119,6 +133,12 @@ export default {
     border-radius: 10px;
     box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.2);
     display: block;
+    width: 100%;
+    .image-error-slot img,
+    .image-place-slot img {
+      width: 100%;
+      display: block;
+    }
   }
   .play {
     width: 18%;
