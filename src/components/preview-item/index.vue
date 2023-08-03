@@ -9,8 +9,8 @@
           <div class="image-error-slot"><img src="../../assets/img-failed.png" /></div>
         </template>
       </el-image>
-      <span class="play" v-if="isShow('playIcon')" :style="{ left: iconPosition[0], top: iconPosition[1] }">
-        <el-icon><IEpCaretRight /></el-icon>
+      <span class="play" v-if="isShow('playIcon')">
+        <el-icon :style="{ left: iconPosition[0], top: iconPosition[1] }"><IEpCaretRight /></el-icon>
       </span>
       <span class="play-count" v-if="isShow('playCount')">{{ playCount }}</span>
       <span class="mask" v-if="isShow('mask')"></span>
@@ -120,12 +120,12 @@ export default {
       border-radius: 10px;
       background-color: rgba(0, 0, 0, 0.2);
       opacity: 0;
+      transition: all 0.6s;
     }
     &:hover {
       .mask,
-      .play {
+      .play .el-icon {
         opacity: 1;
-        transition: all 0.6s;
       }
     }
   }
@@ -141,24 +141,22 @@ export default {
     }
   }
   .play {
-    width: 18%;
-    height: 18%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    z-index: 3;
-    background-color: rgba(255, 255, 255, 0.9);
-    border-radius: 50%;
-    color: $color-primary;
-    // opacity: 0;
     .el-icon {
-      display: inline-block;
-      width: 60%;
-      height: 60%;
+      width: 13%;
+      height: 13%;
+      display: flex;
+      justify-content: center;
+      align-self: center;
+      z-index: 3;
+      border-radius: 50%;
+      background-color: rgba(255, 255, 255, 0.9);
+      position: absolute;
+      color: $color-primary;
+      text-align: center;
+      transition: all 0.6s;
+      opacity: 0;
       svg {
-        width: 100%;
-        height: 100%;
+        font-size: 1.2em;
       }
     }
   }

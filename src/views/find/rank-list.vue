@@ -65,7 +65,7 @@
       </el-row>
       <el-row v-for="(other, index) in handlerList" :key="index">
         <el-col :span="listSpan" v-for="(item, index) in other" :key="item.id" :offset="index > 0 ? listOffset : 0">
-          <PreviewItem :info="item" :iconPosition="['42%', '42%']" />
+          <PreviewItem :info="item" :iconPosition="['42%', '42%']" :key="index" />
         </el-col>
       </el-row>
     </template>
@@ -112,7 +112,7 @@ export default {
       return this.$clientWidth.value;
     },
     handlerList() {
-      return this.clientWidth < 400 ? chunkArray(this.otherList, 2) : chunkArray(this.otherList, 5);
+      return this.clientWidth <= 500 ? chunkArray(this.otherList, 2) : chunkArray(this.otherList, 5);
     }
   },
   async created() {
@@ -157,7 +157,7 @@ export default {
   watch: {
     clientWidth: {
       handler(val) {
-        if (val < 400) {
+        if (val <= 500) {
           (this.listSpan = 10), (this.listOffset = 4);
           this.tableHeader = [
             {
@@ -166,7 +166,11 @@ export default {
               prop: "name"
             }
           ];
+          return;
         }
+
+        this.listSpan = 4;
+        this.listOffset = 1;
       },
       immediate: true
     }
