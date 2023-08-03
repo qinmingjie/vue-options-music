@@ -135,13 +135,13 @@ export default {
   text-overflow: ellipsis;
   white-space: nowrap;
   li,
-  ::v-deep(.el-menu) {
+  ::deep(.el-menu) {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
   }
   &:not(.el-menu--collapse):not(.el-menu--popup-container) .el-menu-item,
-  &:not(.el-menu--collapse):not(.el-menu--popup-container) ::v-deep(.el-sub-menu__title) {
+  &:not(.el-menu--collapse):not(.el-menu--popup-container) ::deep(.el-sub-menu__title) {
     padding: 0 0 0 10px;
   }
   .el-menu-item {
@@ -155,7 +155,7 @@ export default {
     white-space: nowrap;
   }
   .el-sub-menu {
-    ::v-deep(.el-sub-menu__title) {
+    ::deep(.el-sub-menu__title) {
       margin-bottom: 10px;
       border-radius: 5px;
       font-weight: bold;

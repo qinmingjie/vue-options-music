@@ -68,7 +68,7 @@ export default {
       cursor: auto;
     }
     .title-links {
-      ::v-deep span {
+      ::deep span {
         cursor: initial;
       }
     }
@@ -77,7 +77,7 @@ export default {
     cursor: pointer;
   }
   .title-links {
-    ::v-deep span {
+    ::deep span {
       position: relative;
       cursor: pointer;
       margin-right: 20px;
@@ -87,7 +87,7 @@ export default {
     }
   }
   .title-links.ani {
-    ::v-deep span {
+    ::deep span {
       &.active {
         font-weight: bold;
         padding-bottom: 4px;

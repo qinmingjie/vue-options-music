@@ -67,22 +67,22 @@ export default {
 </script>
 
 <style scoped lang="scss">
-::v-deep .el-table--striped .el-table__body tr.el-table__row--striped td.el-table__cell {
+::deep .el-table--striped .el-table__body tr.el-table__row--striped td.el-table__cell {
   background-color: var(--el-table-tr-bg-color);
 }
-::v-deep .el-table tr {
+::deep .el-table tr {
   background-color: var(--el-fill-color-lighter);
   &:hover {
     cursor: pointer;
   }
 }
-::v-deep .el-table--enable-row-hover .el-table__body tr:hover > td.el-table__cell {
+::deep .el-table--enable-row-hover .el-table__body tr:hover > td.el-table__cell {
   background-color: var(--el-table-row-hover-bg-color);
 }
-::v-deep .el-table td.el-table__cell {
+::deep .el-table td.el-table__cell {
   border-bottom: 0;
 }
-::v-deep .el-table__inner-wrapper::before {
+::deep .el-table__inner-wrapper::before {
   background-color: transparent;
 }
 </style>
