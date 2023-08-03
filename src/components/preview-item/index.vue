@@ -68,15 +68,7 @@ export default {
     }
   },
   created() {},
-  mounted() {},
-  watch: {
-    $clientWidth: {
-      handler(val) {
-        console.log(val);
-      },
-      immediate: true.value
-    }
-  }
+  mounted() {}
 };
 </script>
 

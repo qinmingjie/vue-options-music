@@ -11,7 +11,12 @@
         <template v-if="main.tracks">
           <el-row justify="space-between" class="main-toplist">
             <el-col :xs="0" :sm="0" :md="3" :lg="3">
-              <PreviewItem :info="main" :show="['playIcon', 'playCount', 'mask']" :iconPosition="['42%', '42%']" />
+              <PreviewItem
+                :info="main"
+                :show="['playIcon', 'mask']"
+                :iconPosition="['42%', '42%']"
+                :path="'/playlist-detail/' + main.id"
+              />
             </el-col>
             <el-col :xs="24" :sm="24" :md="20" :lg="20">
               <!-- 小于1200显示 -->
@@ -65,7 +70,7 @@
       </el-row>
       <el-row v-for="(other, index) in handlerList" :key="index">
         <el-col :span="listSpan" v-for="(item, index) in other" :key="item.id" :offset="index > 0 ? listOffset : 0">
-          <PreviewItem :info="item" :iconPosition="['42%', '42%']" :key="index" />
+          <PreviewItem :info="item" :iconPosition="['42%', '42%']" :key="index" :path="'/playlist-detail/' + item.id" />
         </el-col>
       </el-row>
     </template>
@@ -129,7 +134,7 @@ export default {
   methods: {
     async getToplist() {
       const res = await getToplist();
-      const toReserve = ["id", "name", "description", "coverImgUrl", "updateTime", "ToplistType"];
+      const toReserve = ["id", "name", "description", "coverImgUrl", "updateTime", "ToplistType", "playCount"];
       let { list = [] } = res?.data || {};
       // 格式化数据
       await list
