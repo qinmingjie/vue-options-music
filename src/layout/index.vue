@@ -67,7 +67,7 @@ export default {
   box-sizing: border-box;
   padding-right: 0;
   .el-scrollbar,
-  ::deep(.el-scrollbar__view) {
+  :deep(.el-scrollbar__view) {
     height: 100%;
   }
 }
