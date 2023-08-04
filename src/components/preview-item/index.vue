@@ -1,7 +1,7 @@
 <template>
   <div class="preview-item">
     <div class="preview-img" ref="previewImg">
-      <el-image :src="info.picUrl" loading="lazy" fit="scale-down">
+      <el-image :src="info.picUrl" loading="lazy">
         <template #placeholder>
           <div class="image-place-slot"><img src="../../assets/img-place.png" /></div>
         </template>

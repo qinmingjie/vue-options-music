@@ -32,7 +32,7 @@ const routes = [
             meta: { title: "排行榜" }
           },
           {
-            path: "playlist/:type",
+            path: "playlist",
             name: "playlist",
             component: () => import("@/views/find/playlist.vue"),
             meta: { title: "歌单" }

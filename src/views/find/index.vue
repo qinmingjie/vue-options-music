@@ -44,7 +44,7 @@ export default {
         },
         {
           name: "歌单",
-          path: "/find/playlist/华语"
+          path: "/find/playlist?tag=全部"
         },
         {
           name: "歌手",

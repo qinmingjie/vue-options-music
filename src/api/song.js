@@ -36,3 +36,39 @@ export function getPlaylistDetail(params) {
     params
   });
 }
+
+// 获取歌单分类
+export function playlistCatlist(params) {
+  return request({
+    url: "/playlist/catlist",
+    method: "GET",
+    params
+  });
+}
+
+// 获取热门歌单分类
+export function hotPlaylistCategory(params) {
+  return request({
+    url: "/playlist/hot",
+    method: "GET",
+    params
+  });
+}
+
+// 获取精品歌单
+export function highquality(params) {
+  return request({
+    url: "/top/playlist/highquality",
+    method: "GET",
+    params
+  });
+}
+
+// 获取分类下的歌单
+export function playlistUnderCategory(params) {
+  return request({
+    url: "/top/playlist",
+    method: "GET",
+    params
+  });
+}
