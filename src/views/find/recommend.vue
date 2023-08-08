@@ -1,7 +1,12 @@
 <template>
   <div class="recommend-container" v-loading="loading">
     <TitleLink :links="links" :options="titleOptions" />
-    <PreviewList :lists="recommendList" :base-skip-path="'/playlist-detail/'" @cardClick="jump" :is-response="true" />
+    <PreviewListCard
+      :lists="recommendList"
+      :base-skip-path="'/playlist-detail/'"
+      @cardClick="jump"
+      :is-response="true"
+    />
   </div>
 </template>
 <script>
@@ -10,13 +15,13 @@ import { mapState } from "vuex";
 
 import { getRecommendPlaylist, getLoginRecommendPlaylist } from "@/api/song";
 import TitleLink from "@/components/title-link/index.vue";
-const PreviewList = defineAsyncComponent(() => import("@/components/preview-list-card/index.vue"));
+const PreviewListCard = defineAsyncComponent(() => import("@/components/preview-list-card/index.vue"));
 
 export default {
   name: "RecommendComp",
   props: {},
   components: {
-    PreviewList,
+    PreviewListCard,
     TitleLink
   },
   data() {

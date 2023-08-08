@@ -63,16 +63,7 @@
         </span>
       </span>
     </div>
-    <el-row v-for="(chunk, chunkIndex) in chunkPlaylist" :key="chunkIndex">
-      <el-col
-        v-for="(playlistItem, index) in chunk"
-        :key="playlistItem.id"
-        :span="span"
-        :offset="index > 0 ? offset : 0"
-      >
-        <PreviewCard :info="playlistItem" :path="jumpPath(playlistItem.id)" />
-      </el-col>
-    </el-row>
+    <PreviewListCard :lists="originPlaylists" @cardClick="jump" :is-response="true" />
     <!-- 歌单分页 -->
     <el-pagination
       v-model="currentPage"
@@ -91,11 +82,12 @@
 import { playlistCatlist, hotPlaylistCategory, highquality, playlistUnderCategory } from "@/api/song";
 import { chunkArray } from "@/utils/tool";
 import { ClickOutside } from "element-plus";
-import PreviewCard from "@/components/preview-card/index.vue";
+import { defineAsyncComponent } from "vue";
+const PreviewListCard = defineAsyncComponent(() => import("@/components/preview-list-card/index.vue"));
 export default {
   name: "PlaylistComp",
   props: {},
-  components: { PreviewCard },
+  components: { PreviewListCard },
   data() {
     return {
       hightqulity: [], // 精品歌单
@@ -105,8 +97,6 @@ export default {
       limit: 10,
       currentPage: 1,
       total: 1000,
-      offset: 1,
-      span: 4,
       categoryPop: null,
       catrgoryLoading: true
     };
@@ -122,15 +112,6 @@ export default {
     },
     clientWidth() {
       return this.$clientWidth.value;
-    },
-    chunkPlaylist() {
-      return this.clientWidth <= 500 ? chunkArray(this.originPlaylists, 2) : chunkArray(this.originPlaylists, 5);
-    },
-
-    jumpPath() {
-      return (id) => {
-        return `/playlist-detail/${id}`;
-      };
     }
   },
   created() {
@@ -177,8 +158,7 @@ export default {
       const res = await playlistUnderCategory({
         cat: this.tag,
         limit: this.limit,
-        offset: this.currentPage - 1,
-        pageSize: 100
+        offset: this.currentPage - 1
       });
       const { playlists = [], total = 0 } = res?.data || {};
       this.total = total;
@@ -207,6 +187,10 @@ export default {
     // 隐藏弹窗
     onClickOutside() {
       this.$refs.popRef?.delayHide?.();
+    },
+
+    jump(params) {
+      params && this.$router.push(`/playlist-detail/${params.id}`);
     }
   },
   mounted() {},

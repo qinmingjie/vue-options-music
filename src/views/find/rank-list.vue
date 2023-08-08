@@ -11,11 +11,11 @@
         <template v-if="main.tracks">
           <el-row justify="space-between" class="main-toplist">
             <el-col :xs="0" :sm="0" :md="3" :lg="3">
-              <PreviewCard
-                :info="main"
+              <PreviewListCard
+                :lists="[main]"
                 :show="['playIcon', 'mask']"
-                :iconPosition="['42%', '42%']"
-                :path="'/playlist-detail/' + main.id"
+                :icon-position="['42%', '42%']"
+                @cardClick="jump"
               />
             </el-col>
             <el-col :xs="24" :sm="24" :md="20" :lg="20">
@@ -68,31 +68,25 @@
           <LinksComp :links="['全球榜']" :link-type="'static-title'" />
         </el-col>
       </el-row>
-      <el-row v-for="(other, index) in handlerList" :key="index">
-        <el-col :span="listSpan" v-for="(item, index) in other" :key="item.id" :offset="index > 0 ? listOffset : 0">
-          <PreviewCard :info="item" :iconPosition="['42%', '42%']" :key="index" :path="'/playlist-detail/' + item.id" />
-        </el-col>
-      </el-row>
+      <PreviewListCard :icon-position="['42%', '42%']" :is-response="true" :lists="otherList" @cardClick="jump" />
     </template>
   </div>
 </template>
 
 <script>
 import LinksComp from "@/components/title-link/index.vue";
-import PreviewCard from "@/components/preview-card/index.vue";
 import SongTable from "@/components/song-table/index.vue";
 import { getToplist, getPlaylistDetail } from "@/api/song";
-import { chunkArray } from "@/utils/tool";
+import { defineAsyncComponent } from "vue";
+const PreviewListCard = defineAsyncComponent(() => import("@/components/preview-list-card/index.vue"));
 export default {
   name: "RankList",
-  components: { LinksComp, SongTable, PreviewCard },
+  components: { LinksComp, SongTable, PreviewListCard },
   data() {
     return {
       mainList: [],
       otherList: [],
       loading: false,
-      listSpan: 4,
-      listOffset: 1,
       tableHeader: [
         {
           slotName: "song-name",
@@ -115,9 +109,6 @@ export default {
     },
     clientWidth() {
       return this.$clientWidth.value;
-    },
-    handlerList() {
-      return this.clientWidth <= 500 ? chunkArray(this.otherList, 2) : chunkArray(this.otherList, 5);
     }
   },
   async created() {
@@ -157,25 +148,30 @@ export default {
         item.tracks = tracks.slice(0, 5);
         return item;
       });
+    },
+    jump(params) {
+      params && this.$router.push("/playlist-detail/" + params.id);
     }
   },
   watch: {
     clientWidth: {
       handler(val) {
         if (val <= 500) {
-          (this.listSpan = 10), (this.listOffset = 4);
-          this.tableHeader = [
-            {
-              slotName: "song-name",
-              label: "歌曲名称",
-              prop: "name"
-            }
-          ];
+          this.tableHeader.length = 1;
           return;
         }
-
-        this.listSpan = 4;
-        this.listOffset = 1;
+        this.tableHeader = [
+          {
+            slotName: "song-name",
+            label: "歌曲名称",
+            prop: "name"
+          },
+          {
+            slotName: "song-artist",
+            label: "歌手",
+            prop: "ar"
+          }
+        ];
       },
       immediate: true
     }
