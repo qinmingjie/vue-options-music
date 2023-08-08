@@ -1,7 +1,7 @@
 <template>
   <div class="preview-item">
-    <div class="preview-img" ref="previewImg">
-      <el-image :src="info.picUrl" loading="lazy">
+    <div class="preview-img">
+      <el-image :src="info.picUrl + '?param=400y400'" loading="lazy">
         <template #placeholder>
           <div class="image-place-slot"><img src="../../assets/img-place.png" /></div>
         </template>
@@ -25,6 +25,7 @@ import { formatPlayCount } from "@/utils/tool";
 export default {
   name: "PreiewItem",
   props: {
+    // 卡片信息
     info: {
       type: Object,
       required: true,
@@ -32,25 +33,30 @@ export default {
         return {};
       }
     },
+    // 卡片展示的内容
     show: {
       type: Array,
       default() {
         return ["name", "playIcon", "playCount", "mask"];
       }
     },
+    // 播放按钮的定位
     iconPosition: {
       type: Array,
       default() {
         return ["76%", "76%"];
       }
     },
+    // 点击跳转的路径
     path: {
       type: String
     }
   },
   components: {},
   data() {
-    return {};
+    return {
+      size: "auto"
+    };
   },
   computed: {
     playCount() {
@@ -66,9 +72,7 @@ export default {
     jump(path) {
       path && this.$router.push(path);
     }
-  },
-  created() {},
-  mounted() {}
+  }
 };
 </script>
 
@@ -106,8 +110,6 @@ export default {
       position: absolute;
       top: 0;
       left: 0;
-      width: 100%;
-      height: 100%;
       z-index: 1;
       border-radius: 10px;
       background-color: rgba(0, 0, 0, 0.2);
@@ -126,10 +128,12 @@ export default {
     box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.2);
     display: block;
     width: 100%;
-    .image-error-slot img,
-    .image-place-slot img {
-      width: 100%;
+    height: 0;
+    padding-bottom: 100%;
+    :deep(img) {
       display: block;
+      width: 100%;
+      height: auto;
     }
   }
   .play {
