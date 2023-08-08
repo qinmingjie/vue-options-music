@@ -1,7 +1,7 @@
 <template>
   <div class="recommend-container" v-loading="loading">
     <TitleLink :links="links" :options="titleOptions" />
-    <PreviewList :lists="recommendList" :base-skip-path="'/playlist-detail/'" />
+    <PreviewList :lists="recommendList" :base-skip-path="'/playlist-detail/'" @cardClick="jump" :is-response="true" />
   </div>
 </template>
 <script>
@@ -57,6 +57,9 @@ export default {
         this.recommendList = [];
       }
       this.loading = false;
+    },
+    jump(params) {
+      params && this.$router.push("/playlist-detail/" + params.id);
     }
   },
   created() {},
