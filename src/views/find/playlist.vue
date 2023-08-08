@@ -70,7 +70,7 @@
         :span="span"
         :offset="index > 0 ? offset : 0"
       >
-        <PreviewItem :info="playlistItem" :path="jumpPath(playlistItem.id)" />
+        <PreviewCard :info="playlistItem" :path="jumpPath(playlistItem.id)" />
       </el-col>
     </el-row>
     <!-- 歌单分页 -->
@@ -91,10 +91,11 @@
 import { playlistCatlist, hotPlaylistCategory, highquality, playlistUnderCategory } from "@/api/song";
 import { chunkArray } from "@/utils/tool";
 import { ClickOutside } from "element-plus";
+import PreviewCard from "@/components/preview-card/index.vue";
 export default {
   name: "PlaylistComp",
   props: {},
-  components: {},
+  components: { PreviewCard },
   data() {
     return {
       hightqulity: [], // 精品歌单

@@ -3,7 +3,7 @@
     <TitleLink :links="links" :options="options" />
     <el-row v-for="(chunk, chunkIndex) in handlerList" :key="chunkIndex">
       <el-col v-for="(recommend, index) in chunk" :key="recommend.id" :span="span" :offset="index > 0 ? offset : 0">
-        <PreviewItem :info="recommend" :path="jumpPath(recommend.id)" />
+        <PreviewCard :info="recommend" :path="jumpPath(recommend.id)" />
       </el-col>
     </el-row>
   </div>
@@ -15,13 +15,13 @@ import { mapState } from "vuex";
 import { getRecommendPlaylist, getLoginRecommendPlaylist } from "@/api/song";
 import { chunkArray } from "@/utils/tool";
 import TitleLink from "@/components/title-link/index.vue";
-const PreviewItem = defineAsyncComponent(() => import("@/components/preview-item/index.vue"));
+const PreviewCard = defineAsyncComponent(() => import("@/components/preview-card/index.vue"));
 
 export default {
   name: "RecommendComp",
   props: {},
   components: {
-    PreviewItem,
+    PreviewCard,
     TitleLink
   },
   data() {

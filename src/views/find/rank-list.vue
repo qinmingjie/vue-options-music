@@ -11,7 +11,7 @@
         <template v-if="main.tracks">
           <el-row justify="space-between" class="main-toplist">
             <el-col :xs="0" :sm="0" :md="3" :lg="3">
-              <PreviewItem
+              <PreviewCard
                 :info="main"
                 :show="['playIcon', 'mask']"
                 :iconPosition="['42%', '42%']"
@@ -70,7 +70,7 @@
       </el-row>
       <el-row v-for="(other, index) in handlerList" :key="index">
         <el-col :span="listSpan" v-for="(item, index) in other" :key="item.id" :offset="index > 0 ? listOffset : 0">
-          <PreviewItem :info="item" :iconPosition="['42%', '42%']" :key="index" :path="'/playlist-detail/' + item.id" />
+          <PreviewCard :info="item" :iconPosition="['42%', '42%']" :key="index" :path="'/playlist-detail/' + item.id" />
         </el-col>
       </el-row>
     </template>
@@ -79,13 +79,13 @@
 
 <script>
 import LinksComp from "@/components/title-link/index.vue";
-import PreviewItem from "@/components/preview-item/index.vue";
+import PreviewCard from "@/components/preview-card/index.vue";
 import SongTable from "@/components/song-table/index.vue";
 import { getToplist, getPlaylistDetail } from "@/api/song";
 import { chunkArray } from "@/utils/tool";
 export default {
   name: "RankList",
-  components: { LinksComp, SongTable, PreviewItem },
+  components: { LinksComp, SongTable, PreviewCard },
   data() {
     return {
       mainList: [],
