@@ -88,7 +88,6 @@ export function debouce(fn, delay) {
     clearTimeout(timer);
     timer = setTimeout(() => {
       fn.call(_this, _args);
-      timer = null;
     }, delay);
   };
 }
