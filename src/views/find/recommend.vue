@@ -1,11 +1,7 @@
 <template>
   <div class="recommend-container" v-loading="loading">
-    <TitleLink :links="links" :options="options" />
-    <el-row v-for="(chunk, chunkIndex) in handlerList" :key="chunkIndex">
-      <el-col v-for="(recommend, index) in chunk" :key="recommend.id" :span="span" :offset="index > 0 ? offset : 0">
-        <PreviewCard :info="recommend" :path="jumpPath(recommend.id)" />
-      </el-col>
-    </el-row>
+    <TitleLink :links="links" :options="titleOptions" />
+    <PreviewList :lists="recommendList" :base-skip-path="'/playlist-detail/'" />
   </div>
 </template>
 <script>
@@ -13,28 +9,25 @@ import { defineAsyncComponent } from "vue";
 import { mapState } from "vuex";
 
 import { getRecommendPlaylist, getLoginRecommendPlaylist } from "@/api/song";
-import { chunkArray } from "@/utils/tool";
 import TitleLink from "@/components/title-link/index.vue";
-const PreviewCard = defineAsyncComponent(() => import("@/components/preview-card/index.vue"));
+const PreviewList = defineAsyncComponent(() => import("@/components/preview-list-card/index.vue"));
 
 export default {
   name: "RecommendComp",
   props: {},
   components: {
-    PreviewCard,
+    PreviewList,
     TitleLink
   },
   data() {
     return {
       loading: false,
       recommendList: [],
-      options: {
+      titleOptions: {
         isBold: true,
         isShowIcon: true,
         hidCursor: true
       },
-      span: 4,
-      offset: 1,
       links: [{ name: "推荐歌单", path: false }]
     };
   },
@@ -42,17 +35,8 @@ export default {
     ...mapState({
       info: (state) => state.user.info
     }),
-    jumpPath() {
-      return (id) => {
-        return `/playlist-detail/${id}`;
-      };
-    },
     clientWidth() {
       return this.$clientWidth.value;
-    },
-
-    handlerList() {
-      return this.clientWidth <= 500 ? chunkArray(this.recommendList, 2) : chunkArray(this.recommendList, 5);
     }
   },
   methods: {
@@ -81,17 +65,6 @@ export default {
     info: {
       handler() {
         this.getRecommendList();
-      },
-      immediate: true
-    },
-    clientWidth: {
-      handler(val) {
-        if (val <= 500) {
-          (this.span = 11), (this.offset = 2);
-          return;
-        }
-        this.span = 4;
-        this.offset = 1;
       },
       immediate: true
     }
