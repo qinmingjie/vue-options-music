@@ -94,9 +94,9 @@ export default {
       hotCategory: [], // 热门分类
       categorys: [], // 全部分类
       originPlaylists: [], // 原始歌单列表
-      limit: 10,
+      limit: 20,
       currentPage: 1,
-      total: 1000,
+      total: 0,
       categoryPop: null,
       catrgoryLoading: true
     };
@@ -158,7 +158,7 @@ export default {
       const res = await playlistUnderCategory({
         cat: this.tag,
         limit: this.limit,
-        offset: this.currentPage - 1
+        offset: (this.currentPage - 1) * this.limit
       });
       const { playlists = [], total = 0 } = res?.data || {};
       this.total = total;
@@ -309,6 +309,10 @@ export default {
   :v-deep(.category-scroll-wrap) {
     width: 300px;
     height: 400px;
+  }
+  .el-pagination {
+    margin: 30px 0;
+    justify-content: center;
   }
 }
 

@@ -44,16 +44,16 @@ export default {
         },
         {
           name: "歌单",
-          path: "/find/playlist?tag=全部"
-        },
-        {
-          name: "歌手",
-          path: "/find/singer-list"
-        },
-        {
-          name: "新碟上架",
-          path: "/find/new-disc"
+          path: "/find/playlist?tag=华语"
         }
+        // {
+        //   name: "歌手",
+        //   path: "/find/singer-list"
+        // },
+        // {
+        //   name: "新碟上架",
+        //   path: "/find/new-disc"
+        // }
       ]
     };
   },
