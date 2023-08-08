@@ -1,6 +1,6 @@
 import { createApp, ref } from "vue";
 import loginComp from "./index.vue";
-import { debouce, getStatus } from "@/utils/tool";
+import { throttle, getStatus } from "@/utils/tool";
 
 const loginApp = createApp(loginComp);
 
@@ -21,10 +21,10 @@ export default {
       let el = document.documentElement || document.body;
       let width = ref(el.clientWidth);
       app.config.globalProperties.$clientWidth = width;
-      window.onresize = debouce(() => {
+      window.onresize = throttle(() => {
         width.value = el.clientWidth;
         app.config.globalProperties.$clientWidth = width;
-      }, 200);
+      }, 100);
     }
   }
 };
