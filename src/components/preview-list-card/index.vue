@@ -139,9 +139,6 @@ export default {
 }
 
 .preview-item {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
   width: 100%;
   .preview-img {
     width: 100%;
@@ -199,8 +196,8 @@ export default {
   }
   .play {
     .el-icon {
-      width: 13%;
-      height: 13%;
+      width: 18%;
+      height: 18%;
       display: flex;
       justify-content: center;
       align-self: center;
