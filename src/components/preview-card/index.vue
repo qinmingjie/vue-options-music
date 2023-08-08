@@ -82,7 +82,6 @@ export default {
   flex-direction: column;
   align-items: flex-start;
   .preview-img {
-    flex: 1;
     width: 100%;
     border-radius: 10px;
     position: relative;
