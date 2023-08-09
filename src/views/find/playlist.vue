@@ -1,5 +1,5 @@
 <template>
-  <div class="playlist-comp">
+  <div class="playlist-comp" v-loading="!originPlaylists.length && contentLoading">
     <!-- 头部精品歌单 -->
     <div class="highquality-playlist-container" v-if="hightqulityData">
       <div class="blur">
@@ -27,8 +27,8 @@
           :virtual-ref="categoryPop"
           trigger="click"
           virtual-triggering
-          width="28em"
           :show-arrow="false"
+          :width="clientWidth < 1200 ? 300 : 400"
           :popper-style="{
             padding: 0
           }"
@@ -36,8 +36,8 @@
           <div class="category-scroll-wrap" v-loading="catrgoryLoading">
             <el-scrollbar height="40vh">
               <template v-if="categorys.length">
-                <el-row v-for="(cateRow, index) in categorys" :key="index" class="category-row">
-                  <el-col :span="6" v-for="categoryItem in cateRow" :key="categoryItem.name">
+                <el-row v-for="(cateRow, index) in handleCategorys" :key="index" class="category-row">
+                  <el-col :span="clientWidth < 1200 ? 8 : 6" v-for="categoryItem in cateRow" :key="categoryItem.name">
                     <span
                       :class="{ active: categoryItem.name === tag }"
                       @click="$router.push(`/find/playlist?tag=${categoryItem.name}`)"
@@ -52,7 +52,7 @@
         </el-popover>
       </span>
       <!-- 热门分类 -->
-      <span class="hot-category" v-if="hotCategory.length">
+      <span class="hot-category" v-if="hotCategory.length && isHidenHotCategorys">
         <span
           v-for="hotItem in hotCategory"
           :key="hotItem.id"
@@ -63,19 +63,21 @@
         </span>
       </span>
     </div>
-    <PreviewListCard :lists="originPlaylists" @cardClick="jump" :is-response="true" />
-    <!-- 歌单分页 -->
-    <el-pagination
-      v-model="currentPage"
-      :page-size="limit"
-      :small="true"
-      :disabled="false"
-      :background="true"
-      layout="prev, pager, next"
-      :total="total"
-      @size-change="getPlaylistUnderCategory"
-      @current-change="getPlaylistUnderCategory"
-    />
+    <div v-if="originPlaylists.length" v-loading="originPlaylists.length && contentLoading">
+      <PreviewListCard :lists="originPlaylists" @cardClick="jump" :is-response="true" />
+      <!-- 歌单分页 -->
+      <el-pagination
+        v-model="currentPage"
+        :page-size="limit"
+        :small="true"
+        :disabled="false"
+        :background="true"
+        layout="prev, pager, next"
+        :total="total"
+        @size-change="getPlaylistUnderCategory"
+        @current-change="getPlaylistUnderCategory"
+      />
+    </div>
   </div>
 </template>
 <script>
@@ -98,7 +100,8 @@ export default {
       currentPage: 1,
       total: 0,
       categoryPop: null,
-      catrgoryLoading: true
+      catrgoryLoading: true,
+      contentLoading: true
     };
   },
   computed: {
@@ -112,6 +115,12 @@ export default {
     },
     clientWidth() {
       return this.$clientWidth.value;
+    },
+    isHidenHotCategorys() {
+      return this.$clientWidth.value >= 1200 ? true : false;
+    },
+    handleCategorys() {
+      return this.$clientWidth.value < 1200 ? chunkArray(this.categorys, 3) : chunkArray(this.categorys, 4);
     }
   },
   created() {
@@ -131,7 +140,7 @@ export default {
         this.catrgoryLoading = true;
         const catRes = await playlistCatlist();
         let { sub = [] } = catRes?.data || {};
-        this.categorys = chunkArray(await this.handerResult(sub, ["name"]), 4);
+        this.categorys = await this.handerResult(sub, ["name"]); // chunkArray(await this.handerResult(sub, ["name"]), 4);
       } catch (error) {
         console.log(error);
       }
@@ -154,23 +163,29 @@ export default {
 
     // 获取分类下的歌单
     async getPlaylistUnderCategory(val) {
+      this.contentLoading = true;
       if (val) this.currentPage = val;
-      const res = await playlistUnderCategory({
-        cat: this.tag,
-        limit: this.limit,
-        offset: (this.currentPage - 1) * this.limit
-      });
-      const { playlists = [], total = 0 } = res?.data || {};
-      this.total = total;
-      this.originPlaylists.length = 0;
-      playlists.forEach((item) => {
-        this.originPlaylists.push({
-          id: item.id,
-          picUrl: item.coverImgUrl,
-          name: item.name,
-          playCount: item.playCount
+      try {
+        const res = await playlistUnderCategory({
+          cat: this.tag,
+          limit: this.limit,
+          offset: (this.currentPage - 1) * this.limit
         });
-      });
+        const { playlists = [], total = 0 } = res?.data || {};
+        this.total = total;
+        this.originPlaylists.length = 0;
+        playlists.forEach((item) => {
+          this.originPlaylists.push({
+            id: item.id,
+            picUrl: item.coverImgUrl,
+            name: item.name,
+            playCount: item.playCount
+          });
+        });
+      } catch (error) {
+        console.error(error);
+      }
+      this.contentLoading = false;
     },
 
     // 格式化分类返回数据
@@ -221,6 +236,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .playlist-comp {
+  min-height: calc(100% - 20px - 1.2em);
   .highquality-playlist-container {
     position: relative;
     overflow: hidden;
@@ -305,10 +321,6 @@ export default {
         opacity: 1;
       }
     }
-  }
-  :v-deep(.category-scroll-wrap) {
-    width: 300px;
-    height: 400px;
   }
   .el-pagination {
     margin: 30px 0;
