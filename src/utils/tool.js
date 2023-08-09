@@ -139,3 +139,13 @@ export function chunkArray(arr = [], size = 0) {
   }
   return newArr;
 }
+
+export function getAppointAttr(obj, keys = []) {
+  if (!obj || !keys.length) return;
+  const result = {};
+  const objKeys = Object.keys(obj);
+  keys.forEach((key) => {
+    objKeys.some((item) => item === key) && (result[key] = obj[key]);
+  });
+  return result;
+}
