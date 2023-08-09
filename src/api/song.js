@@ -72,3 +72,12 @@ export function playlistUnderCategory(params) {
     params
   });
 }
+
+// 获取歌单下的所有歌曲
+export function playlistTrackAll(params) {
+  return request({
+    url: "/playlist/track/all",
+    method: "GET",
+    params
+  });
+}
