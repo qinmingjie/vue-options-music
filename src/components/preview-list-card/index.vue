@@ -4,7 +4,7 @@
     <div class="preview-list-card-wrap" v-if="lists.length">
       <!-- 音乐卡片 -->
       <div :class="['preview-item', isResponse ? cardColumnClass : '']" v-for="list in lists" :key="list.id">
-        <div class="preview-img">
+        <div :class="{ 'preview-img': true, 'hiden-cursor': !isJump }">
           <el-image :src="list.picUrl + '?param=400y400'" loading="lazy">
             <template #placeholder>
               <div class="image-place-slot"><img src="../../assets/img-place.png" /></div>
@@ -20,7 +20,9 @@
           <span class="mask" v-if="isShow('mask')"></span>
           <span class="to-jump" @click="jump(list)"></span>
         </div>
-        <p class="name" v-if="isShow('name')" @click="jump(list)">{{ list.name }}</p>
+        <p :class="{ name: true, 'hiden-cursor': !isJump }" v-if="isShow('name')" @click="jump(list)">
+          {{ list.name }}
+        </p>
       </div>
     </div>
   </div>
@@ -49,14 +51,15 @@ export default {
         return ["76%", "76%"];
       }
     },
-    // 点击跳转的路径
-    path: {
-      type: String
-    },
     // 卡片是否响应式布局
     isResponse: {
       type: Boolean,
       default: false
+    },
+    // 点击是否跳转
+    isJump: {
+      type: Boolean,
+      default: true
     }
   },
   components: {},
@@ -85,7 +88,7 @@ export default {
   },
   methods: {
     jump(params) {
-      this.$emit("cardClick", params);
+      this.isJump && this.$emit("cardClick", params);
     },
     playCount(count) {
       return formatPlayCount(count);
@@ -180,6 +183,9 @@ export default {
         opacity: 1;
       }
     }
+    &.hiden-cursor {
+      cursor: initial;
+    }
   }
   .el-image {
     border-radius: 10px;
@@ -227,6 +233,9 @@ export default {
     cursor: pointer;
     &:hover {
       opacity: 1;
+    }
+    &.hiden-cursor {
+      cursor: initial;
     }
   }
 }
