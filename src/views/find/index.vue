@@ -82,7 +82,7 @@ export default {
     margin-bottom: 0;
   }
   .find-content {
-    height: calc(100% - 20px - 1.2em);
+    min-height: calc(100% - 20px - 1.2em);
   }
   .el-scrollbar {
     padding-right: var(--el-main-padding);
