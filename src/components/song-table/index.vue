@@ -10,11 +10,14 @@
             :label="headerItem.label"
             :prop="headerItem.prop"
             :border="false"
+            :width="headerItem.width"
           >
             <template #default="{ row }">
-              <slot :name="headerItem.slotName" :row="row">
-                {{ row[headerItem.prop] }}
-              </slot>
+              <div class="default-cell">
+                <slot :name="headerItem.slotName" :row="row">
+                  {{ row[headerItem.prop] }}
+                </slot>
+              </div>
             </template>
           </el-table-column>
         </slot>
