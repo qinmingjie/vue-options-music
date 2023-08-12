@@ -6,7 +6,13 @@
     <div :class="{ 'title-links': true, ani: options.ani, 'text-bold': options.isBold }">
       <slot name="default">
         <template v-if="links.length">
-          <span v-for="link in links" :key="link.path" @click="jump(link.path)">{{ link.name }}</span>
+          <span
+            v-for="(link, index) in links"
+            :key="link.name"
+            @click="jump(link, index)"
+            :class="{ active: index === active }"
+            >{{ link.name }}</span
+          >
         </template>
       </slot>
     </div>
@@ -43,12 +49,15 @@ export default {
   },
   components: {},
   data() {
-    return {};
+    return {
+      active: 0
+    };
   },
   computed: {},
   methods: {
-    jump(path) {
-      path && this.$router.push(path);
+    jump(link, index = 0) {
+      this.active = index;
+      link?.path && this.$router.push(link.path);
     }
   },
   created() {},
