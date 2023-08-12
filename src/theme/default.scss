@@ -13,9 +13,6 @@ $--colors: (
   ),
   "error": (
     "base": #db2828
-  ),
-  "info": (
-    "base": #42b8dd
   )
 );
 
@@ -40,6 +37,9 @@ $--colors: (
 
   --cm-placeholder-color: rgba(255, 255, 255, 0.5);
   --cm-opacity-bg-color: rgba(0, 0, 0, 0.1);
+
+  --cm-custom-link-color: #507daf;
+  --cm-custom-link-color-hover: #0b58b0;
 }
 :root.dark {
   --cm-header-text-color: #ffffff;
