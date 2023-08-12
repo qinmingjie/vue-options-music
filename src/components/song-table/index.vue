@@ -3,7 +3,13 @@
     <template v-if="tableData.length">
       <el-table :show-header="showHeader" :stripe="stripe" :data="tableData">
         <slot>
-          <el-table-column type="index" v-if="showIndex" />
+          <el-table-column type="index" v-if="showIndex" width="100">
+            <template #default="{ $index }">
+              <div class="default-cell">
+                <slot>{{ $index + 1 }}</slot>
+              </div>
+            </template>
+          </el-table-column>
           <el-table-column
             v-for="headerItem in headerOptions"
             :key="headerItem.label"
