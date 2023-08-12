@@ -161,10 +161,10 @@ export default {
       align-items: center;
       margin-block: 1em;
       span {
-        padding: 0.4em 1em;
+        padding: 0.4em 0.8em;
         border: 1px solid var(--el-border-color);
         cursor: pointer;
-        margin-right: 1em;
+        margin-right: 0.8em;
         border-radius: 10em;
         display: flex;
         justify-content: flex-start;
