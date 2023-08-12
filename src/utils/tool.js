@@ -149,3 +149,11 @@ export function getAppointAttr(obj, keys = []) {
   });
   return result;
 }
+
+export function formatTimeStamp(timeStamp) {
+  if (!timeStamp) return;
+  const date = new Date(timeStamp);
+  const regx = /(\/|\\)/g;
+  const strTime = Intl.DateTimeFormat("zh-Hans", { year: "numeric", month: "2-digit", day: "2-digit" }).format(date);
+  return strTime.replace(regx, "-");
+}
