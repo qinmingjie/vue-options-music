@@ -1,0 +1,37 @@
+{
+  "id": "2576314",
+  "name": "music",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "2506194",
+      "name": "收藏",
+      "font_class": "subscribe",
+      "unicode": "e632",
+      "unicode_decimal": 58930
+    },
+    {
+      "icon_id": "14095221",
+      "name": "下载",
+      "font_class": "download",
+      "unicode": "e76d",
+      "unicode_decimal": 59245
+    },
+    {
+      "icon_id": "9358771",
+      "name": "share",
+      "font_class": "share",
+      "unicode": "e600",
+      "unicode_decimal": 58880
+    },
+    {
+      "icon_id": "212328",
+      "name": "play_fill",
+      "font_class": "play",
+      "unicode": "e74f",
+      "unicode_decimal": 59215
+    }
+  ]
+}

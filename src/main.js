@@ -6,6 +6,7 @@ import store from "./store/index";
 import App from "./App.vue";
 import LoginPop from "./components/login/index";
 import "element-plus/theme-chalk/src/message.scss";
+import "@/assets/iconfont/iconfont.css";
 
 const app = createApp(App);
 app.use(router);
