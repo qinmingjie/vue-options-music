@@ -67,7 +67,7 @@
       <PreviewListCard :lists="originPlaylists" @cardClick="jump" :is-response="true" />
       <!-- 歌单分页 -->
       <el-pagination
-        v-model="currentPage"
+        v-model:current-page="currentPage"
         :page-size="limit"
         :small="true"
         :disabled="false"
@@ -213,7 +213,7 @@ export default {
     tag: {
       handler() {
         this.currentPage = 1;
-        this.getPlaylistUnderCategory();
+        this.getPlaylistUnderCategory(this.currentPage);
       },
       immediate: true
     },
