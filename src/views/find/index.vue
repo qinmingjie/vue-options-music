@@ -1,5 +1,6 @@
 <template>
   <div class="find-container">
+    <!-- 标题切换 -->
     <TitleLink class="find-title" :options="{ ani: true, isCursor: true }">
       <template #default>
         <router-link v-for="link in links" :to="link.path" :key="link.path" custom v-slot="{ navigate, isActive }">
@@ -9,7 +10,8 @@
         </router-link>
       </template>
     </TitleLink>
-    <el-scrollbar>
+    <!-- 内容区域 -->
+    <el-scrollbar always ref="find-scrollbar">
       <el-row justify="center" class="find-content">
         <el-col :lg="18" :md="24" :sm="24" :xs="24">
           <router-view #="{ Component }">
@@ -57,11 +59,13 @@ export default {
       ]
     };
   },
-  computed: {},
-  methods: {},
-  created() {},
-  mounted() {},
-  watch: {}
+  watch: {
+    $route: {
+      handler() {
+        this.$refs["find-scrollbar"].setScrollTop(0);
+      }
+    }
+  }
 };
 </script>
 <style lang="scss" scoped>
@@ -70,6 +74,7 @@ export default {
   padding-top: calc(20px + 1.2em);
   height: 100%;
   box-sizing: border-box;
+  overflow: hidden;
   .find-title {
     width: 100%;
     position: absolute;
@@ -82,9 +87,10 @@ export default {
     margin-bottom: 0;
   }
   .find-content {
-    min-height: calc(100% - 20px - 1.2em);
+    min-height: calc(100vh - 140px - 1.2em);
   }
-  .el-scrollbar {
+
+  .find-scrollbar {
     padding-right: var(--el-main-padding);
   }
 }

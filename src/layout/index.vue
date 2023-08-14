@@ -66,13 +66,6 @@ export default {
   padding-bottom: 4px;
   box-sizing: border-box;
   padding-right: 0;
-  .el-scrollbar,
-  :deep(.el-scrollbar__view) {
-    height: 100%;
-  }
-}
-.el-scrollbar {
-  padding-right: 20px;
 }
 .cm-footer {
   border-top: 1px solid var(--el-border-color);
