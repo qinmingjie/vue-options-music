@@ -32,10 +32,10 @@
 </template>
 <script>
 import { defineAsyncComponent } from "vue";
-import { getPlaylistDetail as playlistDetail, playlistTrackAll } from "@/api/song";
+import { getPlaylistDetail as playlistDetail } from "@/api/song";
 import { getAppointAttr } from "@/utils/tool";
 const PlaylistDetailHead = defineAsyncComponent(() => import("@/components/playlist-detail-heade/index.vue"));
-const TitleLink = defineAsyncComponent(() => import("@/components/title-link/index.ve"));
+const TitleLink = defineAsyncComponent(() => import("@/components/title-link/index.vue"));
 const SongTable = defineAsyncComponent(() => import("@/components/song-table/index.vue"));
 export default {
   name: "PlaylistDetailIndex",
@@ -113,7 +113,7 @@ export default {
       const res = await playlistDetail({ id: this.playlistId });
       const { playlist = {} } = res?.data || {};
       this.playlistData = await getAppointAttr(playlist, headeKeys);
-      const musicData = await getAppointAttr(playlist, ["trackIds"]).trackIds?.map((item) => item.id);
+      // const musicData = await getAppointAttr(playlist, ["trackIds"]).trackIds?.map((item) => item.id);
     },
     toggleComp(link, index) {
       this.active = index;
