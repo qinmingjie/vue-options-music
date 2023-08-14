@@ -1,5 +1,5 @@
 <template>
-  <el-scrollbar always class="playlist-detail-comp">
+  <el-scrollbar always class="playlist-detail-comp" v-loading="loading">
     <template v-if="playlistData">
       <PlaylistDetailHead :data="playlistData" />
       <TitleLink :options="{ ani: true }">
@@ -74,7 +74,8 @@ export default {
           label: "操作",
           width: 60
         }
-      ]
+      ],
+      loading: false
     };
   },
   computed: {
@@ -96,6 +97,7 @@ export default {
   },
   methods: {
     async getPlaylistDetail() {
+      this.loading = true;
       const headeKeys = [
         "id",
         "name",
@@ -110,10 +112,15 @@ export default {
         "trackCount",
         "tracks"
       ];
-      const res = await playlistDetail({ id: this.playlistId });
-      const { playlist = {} } = res?.data || {};
-      this.playlistData = await getAppointAttr(playlist, headeKeys);
-      // const musicData = await getAppointAttr(playlist, ["trackIds"]).trackIds?.map((item) => item.id);
+      try {
+        const res = await playlistDetail({ id: this.playlistId });
+        const { playlist = {} } = res?.data || {};
+        this.playlistData = await getAppointAttr(playlist, headeKeys);
+        // const musicData = await getAppointAttr(playlist, ["trackIds"]).trackIds?.map((item) => item.id);
+      } catch (error) {
+        console.error(error);
+      }
+      this.loading = false;
     },
     toggleComp(link, index) {
       this.active = index;
