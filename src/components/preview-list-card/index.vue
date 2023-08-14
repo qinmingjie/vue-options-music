@@ -13,8 +13,8 @@
               <div class="image-error-slot"><img src="../../assets/img-failed.png" /></div>
             </template>
           </el-image>
-          <span class="play" v-if="isShow('playIcon')">
-            <el-icon :style="{ left: iconPosition[0], top: iconPosition[1] }"><IEpCaretRight /></el-icon>
+          <span class="play" v-if="isShow('playIcon')" :style="{ left: iconPosition[0], top: iconPosition[1] }">
+            <i class="iconfont icon-play"></i>
           </span>
           <span class="play-count" v-if="isShow('playCount')">{{ playCount(list.playcount || list.playCount) }}</span>
           <span class="mask" v-if="isShow('mask')"></span>
@@ -179,7 +179,7 @@ export default {
     }
     &:hover {
       .mask,
-      .play .el-icon {
+      .play {
         opacity: 1;
       }
     }
@@ -201,23 +201,20 @@ export default {
     }
   }
   .play {
-    .el-icon {
-      width: 18%;
-      height: 18%;
-      display: flex;
-      justify-content: center;
-      align-self: center;
-      z-index: 3;
-      border-radius: 50%;
-      background-color: rgba(255, 255, 255, 0.9);
-      position: absolute;
-      color: $color-primary;
-      text-align: center;
-      transition: all 0.6s;
-      opacity: 0;
-      svg {
-        font-size: 1.2em;
-      }
+    display: flex;
+    padding: 4%;
+    justify-content: center;
+    align-items: center;
+    z-index: 3;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.9);
+    position: absolute;
+    color: $color-primary;
+    text-align: center;
+    transition: all 0.6s;
+    opacity: 0;
+    .icon-play {
+      font-size: 1em;
     }
   }
   .name {
