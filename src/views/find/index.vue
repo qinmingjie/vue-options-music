@@ -11,7 +11,7 @@
       </template>
     </TitleLink>
     <!-- 内容区域 -->
-    <el-scrollbar always ref="find-scrollbar">
+    <el-scrollbar always ref="find-scrollbar" class="find-scrollbar">
       <el-row justify="center" class="find-content">
         <el-col :lg="18" :md="24" :sm="24" :xs="24">
           <router-view #="{ Component }">
@@ -91,7 +91,7 @@ export default {
   }
 
   .find-scrollbar {
-    padding-right: var(--el-main-padding);
+    padding-right: var(--cm-scrollbar-padding);
   }
 }
 </style>

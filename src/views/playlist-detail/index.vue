@@ -1,5 +1,5 @@
 <template>
-  <el-scrollbar class="playlist-detail-comp">
+  <el-scrollbar always class="playlist-detail-comp">
     <template v-if="playlistData">
       <PlaylistDetailHead :data="playlistData" />
       <TitleLink :options="{ ani: true }">
@@ -142,6 +142,7 @@ export default {
 <style lang="scss" scoped>
 .playlist-detail-comp {
   height: 100%;
+  padding-right: var(--cm-scrollbar-padding);
   .playlist-detail-head-comp {
     margin-bottom: 2em;
   }

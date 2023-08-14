@@ -236,7 +236,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .playlist-comp {
-  min-height: calc(100% - 20px - 1.2em);
+  height: 100%;
   .highquality-playlist-container {
     position: relative;
     overflow: hidden;
