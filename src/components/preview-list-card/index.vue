@@ -119,7 +119,7 @@ export default {
   flex-wrap: wrap;
 
   .column2 {
-    width: 46%;
+    width: 48%;
     margin-right: 4%;
     &:nth-of-type(2n) {
       margin-right: 0;
