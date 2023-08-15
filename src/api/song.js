@@ -81,3 +81,13 @@ export function playlistTrackAll(params) {
     params
   });
 }
+
+// 获取每日推荐歌曲
+export function recommendSongs(data) {
+  return request({
+    url: "/recommend/songs",
+    method: "POST",
+    data,
+    isCookie: true
+  });
+}
