@@ -13,11 +13,13 @@
         <span class="create-time">{{ createTime }}</span>
       </div>
       <div class="count">
-        <span class="play"> <i class="iconfont icon-play"></i>播放 </span>
-        <span class="subscribe"
-          ><i class="iconfont icon-subscribe"></i>收藏{{ count(data.subscribedCount, true) }}
-        </span>
-        <span class="share"><i class="iconfont icon-share"></i>分享{{ count(data.shareCount, true) }}</span>
+        <el-button class="play" type="primary" round><i class="iconfont icon-play"></i>播放</el-button>
+        <el-button class="subscribe" type="default" round>
+          <i class="iconfont icon-subscribe"></i>收藏{{ count(data.subscribedCount, true) }}
+        </el-button>
+        <el-button class="share" type="default" round>
+          <i class="iconfont icon-share"></i>分享{{ count(data.shareCount, true) }}
+        </el-button>
       </div>
       <div class="other">
         <div class="tags">
@@ -176,21 +178,6 @@ export default {
         .iconfont {
           font-size: 1.3em;
           margin-right: 0.2em;
-        }
-      }
-      .play {
-        background-color: $color-primary;
-        color: var(--el-color-white);
-        border: 1px solid $color-primary;
-        &:hover {
-          background-color: var(--el-color-primary-dark-2);
-          border-color: var(--el-color-primary-dark-2);
-        }
-      }
-      .subscribe,
-      .share {
-        &:hover {
-          background-color: var(--el-color-info-light-9);
         }
       }
     }
