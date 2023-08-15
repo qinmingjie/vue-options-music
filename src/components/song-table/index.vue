@@ -3,7 +3,7 @@
     <template v-if="tableData.length">
       <el-table :show-header="showHeader" :stripe="stripe" :data="tableData">
         <slot>
-          <el-table-column type="index" v-if="showIndex" width="100">
+          <el-table-column type="index" v-if="showIndex" width="65">
             <template #default="{ $index }">
               <div class="default-cell">
                 <slot>{{ $index + 1 }}</slot>
@@ -76,6 +76,11 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.default-cell {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 :deep(.el-table--striped .el-table__body tr.el-table__row--striped td.el-table__cell) {
   background-color: var(--el-table-tr-bg-color);
 }
