@@ -141,13 +141,13 @@ export function chunkArray(arr = [], size = 0) {
 }
 
 export function getAppointAttr(obj, keys = []) {
-  if (!obj || !keys.length) return;
+  const objKeys = obj && Object.keys(obj);
   const result = {};
-  const objKeys = Object.keys(obj);
+  if (!obj || !objKeys.length || !keys.length) return null;
   keys.forEach((key) => {
     objKeys.some((item) => item === key) && (result[key] = obj[key]);
   });
-  return result;
+  return Object.keys(result) && result;
 }
 
 export function formatTimeStamp(timeStamp) {
