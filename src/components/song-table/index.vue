@@ -6,7 +6,7 @@
           <el-table-column type="index" v-if="showIndex" width="65">
             <template #default="{ $index }">
               <div class="default-cell">
-                <slot>{{ $index + 1 }}</slot>
+                <slot name="index" :index="handleIndex(handleIndex)">{{ handleIndex($index) }}</slot>
               </div>
             </template>
           </el-table-column>
@@ -69,6 +69,13 @@ export default {
     return {
       loading: false
     };
+  },
+  computed: {
+    handleIndex() {
+      return (index) => {
+        return index < 9 ? `0${index + 1}` : index + 1;
+      };
+    }
   },
   methods: {},
   watch: {}
