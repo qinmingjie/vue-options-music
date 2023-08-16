@@ -1,5 +1,5 @@
 <template>
-  <div class="everyday-comp">
+  <div class="everyday-comp" v-loading="loading">
     <el-scrollbar always>
       <div class="everyday-description">
         <span class="date">
@@ -59,7 +59,8 @@ export default {
           label: "时间",
           width: 80
         }
-      ]
+      ],
+      loading: false
     };
   },
   computed: {
@@ -81,10 +82,16 @@ export default {
   },
   methods: {
     async getRecommendSongs() {
-      const attr = ["id", "name", "ar", "dt", "al"];
-      const res = await recommendSongs();
-      const { dailySongs = [] } = res?.data?.data || {};
-      this.songs = dailySongs.map((item) => getAppointAttr(item, attr));
+      this.loading = true;
+      try {
+        const attr = ["id", "name", "ar", "dt", "al"];
+        const res = await recommendSongs();
+        const { dailySongs = [] } = res?.data?.data || {};
+        this.songs = dailySongs.map((item) => getAppointAttr(item, attr));
+      } catch (error) {
+        console.error("获取推荐音乐出错", error);
+      }
+      this.loading = false;
     },
     handlerArtis(artists) {
       return artists && artists.map((item) => item.name).join("/");
