@@ -4,7 +4,11 @@ import Layout from "@/layout/index.vue";
 import { example as LoginApp } from "@/components/login/index";
 import { getStatus } from "@/utils/tool";
 import store from "@/store/index";
-
+/*
+ * meta字段
+ * title:标题,isAsideMenu是否是侧边栏菜单
+ * isLogin:是否需要登陆访问,isCustomMenu:菜单是否需要自定义
+ */
 const routes = [
   {
     path: "/",
@@ -16,7 +20,7 @@ const routes = [
         path: "/find",
         name: "find",
         component: () => import("@/views/find/index.vue"),
-        meta: { title: "发现音乐", isAsideMenu: true, requiresAuth: false },
+        meta: { title: "发现音乐", isAsideMenu: true },
         redirect: "/find/recommend",
         children: [
           {
@@ -55,47 +59,31 @@ const routes = [
         path: "playlist-detail/:id",
         name: "playlist-detail",
         component: () => import("@/views/playlist-detail/index.vue"),
-        meta: {
-          title: "歌单详情",
-          isAsideMenu: false,
-          requiresAuth: false
-        }
+        meta: { title: "歌单详情" }
       },
       {
         path: "song-detail/:id",
         name: "song-detail",
         component: () => import("@/views/song-detail/index.vue"),
-        meta: {
-          title: "歌曲详情",
-          isAsideMenu: false,
-          requiresAuth: false
-        }
+        meta: { title: "歌曲详情" }
       },
       {
         path: "artist-detail/:id",
         name: "artist-detail",
         component: () => import("@/views/artist-detail/index.vue"),
-        meta: {
-          title: "歌手详情",
-          isAsideMenu: false,
-          requiresAuth: false
-        }
+        meta: { title: "歌手详情" }
       },
       {
         path: "album-detail/:id",
         name: "album-detail",
         component: () => import("@/views/album-detail/index.vue"),
-        meta: {
-          title: "专辑详情",
-          isAsideMenu: false,
-          requiresAuth: false
-        }
+        meta: { title: "专辑详情" }
       },
       {
         path: "/search",
         name: "search",
         component: () => import("@/views/search/index.vue"),
-        meta: { title: "搜索", isAsideMenu: false, requiresAuth: false },
+        meta: { title: "搜索" },
         children: [
           {
             path: "search-song/:keywords",
@@ -129,7 +117,7 @@ const routes = [
     path: "/:pathMatch(.*)*",
     name: "page404",
     component: () => import("@/views/404.vue"),
-    meta: { title: "404 Not Found!", isAsideMenu: false, requiresAuth: false }
+    meta: { title: "404 Not Found!" }
   }
 ];
 
@@ -141,7 +129,7 @@ export const asyncRoutes = [
     meta: {
       title: "每日推荐",
       isAsideMenu: true,
-      requiresAuth: true,
+      isLogin: true,
       roles: ["admin"]
     }
   },
@@ -152,30 +140,19 @@ export const asyncRoutes = [
     meta: {
       title: "个人中心",
       isAsideMenu: true,
-      requiresAuth: true,
+      isLogin: true,
       roles: ["admin"]
     }
   },
   {
-    path: "/favourite",
+    path: "/favourite/:id",
     name: "favourite",
-    component: () => import("@/views/favourite/index.vue"),
+    component: () => import("@/views/playlist-detail/index.vue"),
     meta: {
       title: "我喜欢的音乐",
       isAsideMenu: true,
-      requiresAuth: true,
-      roles: ["admin"]
-    }
-  },
-  {
-    path: "/collect-playlist/:id",
-    name: "collect-playlist",
-    component: () => import("@/views/playlist-detail/index.vue"),
-    meta: {
-      title: "收藏的歌单",
-      isAsideMenu: true,
-      menuDisabled: true,
-      requiresAuth: true,
+      isCustomMenu: true,
+      isLogin: true,
       roles: ["admin"]
     }
   },
@@ -186,8 +163,20 @@ export const asyncRoutes = [
     meta: {
       title: "创建的歌单",
       isAsideMenu: true,
-      menuDisabled: true,
-      requiresAuth: true,
+      isCustomMenu: true,
+      isLogin: true,
+      roles: ["admin"]
+    }
+  },
+  {
+    path: "/collect-playlist/:id",
+    name: "collect-playlist",
+    component: () => import("@/views/playlist-detail/index.vue"),
+    meta: {
+      title: "收藏的歌单",
+      isAsideMenu: true,
+      isCustomMenu: true,
+      isLogin: true,
       roles: ["admin"]
     }
   }
