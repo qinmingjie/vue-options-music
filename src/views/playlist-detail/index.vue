@@ -143,7 +143,13 @@ export default {
     this.getPlaylistDetail();
   },
   mounted() {},
-  watch: {}
+  watch: {
+    playlistId: {
+      handler(newVal) {
+        newVal && this.getPlaylistDetail();
+      }
+    }
+  }
 };
 </script>
 <style lang="scss" scoped>
