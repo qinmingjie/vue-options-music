@@ -6,6 +6,69 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "18176393",
+      "name": "音量,关",
+      "font_class": "sound-close",
+      "unicode": "ea7d",
+      "unicode_decimal": 60029
+    },
+    {
+      "icon_id": "18176400",
+      "name": "音量,低",
+      "font_class": "sound-open",
+      "unicode": "ea7e",
+      "unicode_decimal": 60030
+    },
+    {
+      "icon_id": "7594158",
+      "name": "24gf-playlist",
+      "font_class": "playlist",
+      "unicode": "ea82",
+      "unicode_decimal": 60034
+    },
+    {
+      "icon_id": "710369",
+      "name": "07暂停",
+      "font_class": "stop",
+      "unicode": "e628",
+      "unicode_decimal": 58920
+    },
+    {
+      "icon_id": "2076218",
+      "name": "播放2",
+      "font_class": "play",
+      "unicode": "e87c",
+      "unicode_decimal": 59516
+    },
+    {
+      "icon_id": "14775214",
+      "name": "next_line",
+      "font_class": "next",
+      "unicode": "e8a8",
+      "unicode_decimal": 59560
+    },
+    {
+      "icon_id": "14775335",
+      "name": "previous_line",
+      "font_class": "prev",
+      "unicode": "e8a9",
+      "unicode_decimal": 59561
+    },
+    {
+      "icon_id": "33576753",
+      "name": "Icon_random",
+      "font_class": "random",
+      "unicode": "e603",
+      "unicode_decimal": 58883
+    },
+    {
+      "icon_id": "16242860",
+      "name": "M_循环",
+      "font_class": "loop",
+      "unicode": "e75d",
+      "unicode_decimal": 59229
+    },
+    {
       "icon_id": "609460",
       "name": "女",
       "font_class": "female",
@@ -39,13 +102,6 @@
       "font_class": "share",
       "unicode": "e600",
       "unicode_decimal": 58880
-    },
-    {
-      "icon_id": "212328",
-      "name": "play_fill",
-      "font_class": "play",
-      "unicode": "e74f",
-      "unicode_decimal": 59215
     }
   ]
 }

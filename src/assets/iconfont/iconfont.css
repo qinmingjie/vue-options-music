@@ -1,8 +1,8 @@
 @font-face {
   font-family: "iconfont"; /* Project id 2576314 */
-  src: url('iconfont.woff2?t=1692243600228') format('woff2'),
-       url('iconfont.woff?t=1692243600228') format('woff'),
-       url('iconfont.ttf?t=1692243600228') format('truetype');
+  src: url('iconfont.woff2?t=1692282230060') format('woff2'),
+       url('iconfont.woff?t=1692282230060') format('woff'),
+       url('iconfont.ttf?t=1692282230060') format('truetype');
 }
 
 .iconfont {
@@ -11,6 +11,42 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-sound-close:before {
+  content: "\ea7d";
+}
+
+.icon-sound-open:before {
+  content: "\ea7e";
+}
+
+.icon-playlist:before {
+  content: "\ea82";
+}
+
+.icon-stop:before {
+  content: "\e628";
+}
+
+.icon-play:before {
+  content: "\e87c";
+}
+
+.icon-next:before {
+  content: "\e8a8";
+}
+
+.icon-prev:before {
+  content: "\e8a9";
+}
+
+.icon-random:before {
+  content: "\e603";
+}
+
+.icon-loop:before {
+  content: "\e75d";
 }
 
 .icon-female:before {
@@ -31,9 +67,5 @@
 
 .icon-share:before {
   content: "\e600";
-}
-
-.icon-play:before {
-  content: "\e74f";
 }
 
