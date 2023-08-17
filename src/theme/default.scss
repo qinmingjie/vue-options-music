@@ -40,7 +40,7 @@ $--colors: (
   --cm-custom-link-color: #507daf;
   --cm-custom-link-color-hover: #0b58b0;
 
-  --cm-scrollbar-padding: 20px;
+  --cm-scrollbar-padding: 15px;
 }
 :root.dark {
   --cm-header-text-color: #ffffff;
@@ -83,4 +83,15 @@ $--colors: (
 }
 .el-button .iconfont {
   margin-right: 0.2em;
+}
+
+// 浏览器自带滚动条样式
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+  background-color: transparent;
+}
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background-color: var(--el-text-color-secondary);
 }
