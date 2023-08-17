@@ -1,5 +1,5 @@
 <template>
-  <el-scrollbar always class="playlist-detail-comp" v-loading="loading">
+  <div class="playlist-detail-comp" v-loading="loading">
     <template v-if="playlistData">
       <PlaylistDetailHead :data="playlistData" />
       <TitleLink :options="{ ani: true }">
@@ -12,11 +12,7 @@
           {{ link.name }}
         </span>
       </TitleLink>
-      <SongTable
-        :header-options="songTableHead"
-        :table-data="playlistData.tracks"
-        :show-index="clientWidth <= 900 ? false : true"
-      >
+      <SongTable :header-options="songTableHead" :table-data="tracks" :show-index="clientWidth <= 900 ? false : true">
         <template #song-artist="{ row }">
           {{ handlerArtis(row.ar) }}
         </template>
@@ -28,12 +24,11 @@
         </template>
       </SongTable>
     </template>
-  </el-scrollbar>
+  </div>
 </template>
 <script>
 import { defineAsyncComponent } from "vue";
 import { getPlaylistDetail as playlistDetail } from "@/api/song";
-import { getAppointAttr } from "@/utils/tool";
 const PlaylistDetailHead = defineAsyncComponent(() => import("@/components/playlist-detail-heade/index.vue"));
 const TitleLink = defineAsyncComponent(() => import("@/components/title-link/index.vue"));
 const SongTable = defineAsyncComponent(() => import("@/components/song-table/index.vue"));
@@ -93,29 +88,21 @@ export default {
       } else {
         return this.tableHead;
       }
+    },
+    tracks() {
+      return this.playlistData?.tracks || [];
+    },
+    total() {
+      return this.playlistData?.trackCount || 0;
     }
   },
   methods: {
     async getPlaylistDetail() {
       this.loading = true;
-      const headeKeys = [
-        "id",
-        "name",
-        "tags",
-        "coverImgUrl",
-        "createTime",
-        "creator",
-        "description",
-        "playCount",
-        "shareCount",
-        "subscribedCount",
-        "trackCount",
-        "tracks"
-      ];
       try {
         const res = await playlistDetail({ id: this.playlistId });
         const { playlist = {} } = res?.data || {};
-        this.playlistData = await getAppointAttr(playlist, headeKeys);
+        this.playlistData = playlist;
         // const musicData = await getAppointAttr(playlist, ["trackIds"]).trackIds?.map((item) => item.id);
       } catch (error) {
         console.error(error);
@@ -155,9 +142,17 @@ export default {
 <style lang="scss" scoped>
 .playlist-detail-comp {
   height: 100%;
-  padding-right: var(--cm-scrollbar-padding);
+  padding-right: var(--cm-scrollbar-content-space);
+  overflow: hidden;
+  overflow-y: scroll;
   .playlist-detail-head-comp {
     margin-bottom: 2em;
+    padding: 2em 0 0 var(--cm-scrollbar-padding);
+    box-sizing: border-box;
+  }
+  .title-link-container,
+  .song-table-comp {
+    padding-left: var(--cm-scrollbar-padding);
   }
   :deep(.el-table .default-cell),
   :deep(.el-table .default-cell div) {

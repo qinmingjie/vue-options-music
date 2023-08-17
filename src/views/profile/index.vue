@@ -132,14 +132,18 @@ export default {
 </script>
 <style lang="scss" scoped>
 .profile-comp {
+  height: 100%;
+  overflow: hidden;
+  overflow-y: scroll;
+  padding: 2em var(--cm-scrollbar-content-space) 0 var(--cm-scrollbar-padding);
+  box-sizing: border-box;
   .profile-user {
     display: flex;
     justify-content: space-between;
     align-items: center;
     position: relative;
-    margin-bottom: 1.5em;
-    padding-bottom: 2em;
-    border-bottom: 1px solid var(--el-border-color);
+    margin-bottom: 4em;
+    padding-right: 2em;
     .avatar {
       width: 180px;
       height: 180px;
@@ -162,6 +166,8 @@ export default {
         justify-content: flex-start;
         align-items: center;
         padding-bottom: 0.8em;
+        margin-bottom: 0.8em;
+        border-bottom: 1px solid var(--el-border-color);
         span {
           margin-right: 0.5em;
           &:last-of-type {
@@ -270,11 +276,20 @@ export default {
   .title-link-container {
     margin-bottom: 1.5em;
   }
+  .el-scrollbar {
+    padding-right: var(--cm-scrollbar-padding);
+  }
 }
 @media (max-width: 1200px) {
   .profile-comp {
     .playlist {
       width: 100%;
+    }
+    .profile-user {
+      padding-right: 0;
+      .info {
+        flex: 1;
+      }
     }
   }
 }

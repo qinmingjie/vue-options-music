@@ -1,5 +1,5 @@
 <template>
-  <div class="find-container">
+  <div class="find-comp">
     <!-- 标题切换 -->
     <TitleLink class="find-title" :options="{ ani: true, isCursor: true }">
       <template #default>
@@ -11,17 +11,15 @@
       </template>
     </TitleLink>
     <!-- 内容区域 -->
-    <el-scrollbar always ref="find-scrollbar" class="find-scrollbar">
-      <el-row justify="center" class="find-content">
-        <el-col :lg="18" :md="24" :sm="24" :xs="24">
-          <router-view #="{ Component }">
-            <keep-alive>
-              <component :is="Component"></component>
-            </keep-alive>
-          </router-view>
-        </el-col>
-      </el-row>
-    </el-scrollbar>
+    <el-row justify="center" class="find-content">
+      <el-col :lg="18" :md="24" :sm="24" :xs="24">
+        <router-view #="{ Component }">
+          <keep-alive>
+            <component :is="Component"></component>
+          </keep-alive>
+        </router-view>
+      </el-col>
+    </el-row>
   </div>
 </template>
 <script>
@@ -59,39 +57,36 @@ export default {
       ]
     };
   },
-  watch: {
-    $route: {
-      handler() {
-        this.$refs["find-scrollbar"].setScrollTop(0);
-      }
-    }
-  }
+  watch: {}
 };
 </script>
 <style lang="scss" scoped>
-.find-container {
+.find-comp {
   position: relative;
-  padding-top: calc(20px + 1.2em);
   height: 100%;
   box-sizing: border-box;
   overflow: hidden;
+  padding-top: 4em;
+  box-sizing: border-box;
   .find-title {
     width: 100%;
     position: absolute;
     top: 0;
     left: 0;
-    z-index: 2;
+    z-index: 10;
     background-color: var(--cm-content-bg-color);
-    height: 20px;
     padding-bottom: 1.2em;
     margin-bottom: 0;
+    padding: 0 var(--cm-scrollbar-padding);
+    box-sizing: border-box;
+    height: 4em;
+    line-height: 4em;
   }
   .find-content {
-    min-height: calc(100vh - 140px - 1.2em);
-  }
-
-  .find-scrollbar {
-    padding-right: var(--cm-scrollbar-padding);
+    height: 100%;
+    overflow: hidden;
+    overflow-y: scroll;
+    padding: 0 var(--cm-scrollbar-content-space) 0 var(--cm-scrollbar-padding);
   }
 }
 </style>

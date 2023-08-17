@@ -63,9 +63,8 @@ export default {
 }
 .cm-main {
   height: calc(100vh - 120px);
-  padding-bottom: 4px;
   box-sizing: border-box;
-  padding-right: 0;
+  padding: 0;
 }
 .cm-footer {
   border-top: 1px solid var(--el-border-color);
@@ -92,9 +91,6 @@ export default {
   }
   .cm-header {
     padding: 0 15px;
-  }
-  .el-scrollbar {
-    padding-right: 15;
   }
   .cm-footer {
     padding: 0 15px;

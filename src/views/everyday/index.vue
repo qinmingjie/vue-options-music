@@ -1,6 +1,6 @@
 <template>
   <div class="everyday-comp" v-loading="loading">
-    <el-scrollbar always>
+    <div class="everyday-top">
       <div class="everyday-description">
         <span class="date">
           <span>{{ day }}</span>
@@ -14,16 +14,14 @@
         <el-button type="primary" round class="play"><i class="iconfont icon-play"></i>播放全部</el-button>
         <el-button type="default" round class="subscribe"><i class="iconfont icon-subscribe"></i>收藏全部</el-button>
       </div>
-      <div>
-        <SongTable :table-data="songs" :header-options="songTableHeader" :show-index="showIndex">
-          <template #song-al="{ row }">
-            {{ handlerArtis(row.ar) }}
-          </template>
-          <template #song-album="{ row }">{{ row.al.name }}</template>
-          <template #song-time="{ row }">{{ handlerdt(row.dt) }}</template>
-        </SongTable>
-      </div>
-    </el-scrollbar>
+    </div>
+    <SongTable :table-data="songs" :header-options="songTableHeader" :show-index="showIndex">
+      <template #song-al="{ row }">
+        {{ handlerArtis(row.ar) }}
+      </template>
+      <template #song-album="{ row }">{{ row.al.name }}</template>
+      <template #song-time="{ row }">{{ handlerdt(row.dt) }}</template>
+    </SongTable>
   </div>
 </template>
 <script>
@@ -117,12 +115,18 @@ export default {
 .everyday-comp {
   height: 100%;
   position: relative;
+  overflow: hidden;
+  overflow-y: scroll;
+  box-sizing: border-box;
+  .everyday-top {
+    padding: 1.5em var(--cm-scrollbar-content-space) 0.6em 2em;
+    border-bottom: 1px solid var(--el-border-color);
+  }
   .everyday-description {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 2em;
-    padding-top: 6px;
+    margin-bottom: 1.2em;
     .date {
       display: flex;
       width: 76px;
@@ -183,12 +187,10 @@ export default {
     }
   }
   .everyday-actions {
-    padding-bottom: 1.5em;
     position: relative;
-    border-bottom: 1px solid var(--el-border-color);
   }
-  .el-scrollbar {
-    padding-right: 30px;
+  .song-table-comp {
+    padding: 0 var(--cm-scrollbar-content-space) 0 var(--cm-scrollbar-padding);
   }
 }
 </style>
