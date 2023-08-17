@@ -6,6 +6,20 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "609460",
+      "name": "女",
+      "font_class": "female",
+      "unicode": "e6e8",
+      "unicode_decimal": 59112
+    },
+    {
+      "icon_id": "702579",
+      "name": "gender-male",
+      "font_class": "male",
+      "unicode": "e892",
+      "unicode_decimal": 59538
+    },
+    {
       "icon_id": "2506194",
       "name": "收藏",
       "font_class": "subscribe",
