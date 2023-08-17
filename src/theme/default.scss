@@ -40,7 +40,7 @@ $--colors: (
   --cm-custom-link-color: #507daf;
   --cm-custom-link-color-hover: #0b58b0;
 
-  --cm-scrollbar-padding: 15px;
+  --cm-scrollbar-padding: 20px;
   --cm-scrollbar-content-space: 8px;
 }
 :root.dark {
@@ -95,4 +95,9 @@ $--colors: (
 ::-webkit-scrollbar-thumb {
   border-radius: 10px;
   background-color: var(--el-text-color-secondary);
+}
+@media (max-width: 1200px) {
+  :root {
+    --cm-scrollbar-padding: 15px;
+  }
 }
