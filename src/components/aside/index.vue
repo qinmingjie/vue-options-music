@@ -23,7 +23,7 @@
         <el-sub-menu v-if="otherCreatePlaylist.length && menu.name === 'create-playlist'" :index="menu.name">
           <template #title>{{ menu.title }}</template>
           <el-menu-item
-            v-for="createItem in otherCreatePlaylist.slice(1)"
+            v-for="createItem in otherCreatePlaylist"
             :key="createItem.id"
             :index="replaceRouteId(menu.path, createItem.id)"
           >
