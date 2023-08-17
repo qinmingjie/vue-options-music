@@ -70,15 +70,16 @@ export default {
     // 获取用户信息
     async getUserInfo({ commit }) {
       try {
-        const { data } = await getUserStatus();
-        if (data?.data && !data.data?.account && !data.data?.profile) {
+        const status = await getUserStatus();
+        const { data } = status?.data || {};
+        if (data && !data?.account && !data?.profile) {
           await loginApp.open();
           return;
         }
-        const res = await getUserDetail({ uid: data?.data?.account?.id });
+        const res = await getUserDetail({ uid: data?.account?.id });
         if (res.data.profile) {
-          res.data.profile.roles = ["admin"];
-          commit("SET_INFO", res.data.profile);
+          res.data.roles = ["admin"];
+          commit("SET_INFO", res.data);
         }
       } catch (error) {
         console.error(error);
@@ -94,7 +95,7 @@ export default {
     },
     // 获取用户歌单
     async handlePlaylist({ state, commit }) {
-      const res = await getUserPlaylist({ uid: state.info?.userId });
+      const res = await getUserPlaylist({ uid: state.info?.profile.userId });
       const playlist = res.data.playlist || [];
       playlist.forEach((item) => {
         item.subscribed && commit("SET_COLLECT_PLAYLIST", item);
