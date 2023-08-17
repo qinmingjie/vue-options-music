@@ -1,5 +1,5 @@
 <template>
-  <div v-loading="loading">
+  <div v-loading="loading" class="song-table-comp">
     <template v-if="tableData.length">
       <el-table :show-header="showHeader" :stripe="stripe" :data="tableData">
         <slot>
