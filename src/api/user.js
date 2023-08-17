@@ -38,13 +38,23 @@ export function getUserDetail(params) {
   return request({
     url: "/user/detail",
     method: "GET",
-    params
+    params,
+    isTimeStamp: true
   });
 }
 
 export function getUserPlaylist(data) {
   return request({
     url: "/user/playlist",
+    method: "POST",
+    data,
+    isCookie: true
+  });
+}
+
+export function loginOut(data) {
+  return request({
+    url: "/logout",
     method: "POST",
     data,
     isCookie: true
