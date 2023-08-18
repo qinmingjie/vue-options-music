@@ -6,6 +6,20 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "7594159",
+      "name": "24gf-playlist2",
+      "font_class": "playlist",
+      "unicode": "ea83",
+      "unicode_decimal": 60035
+    },
+    {
+      "icon_id": "6263352",
+      "name": "播放",
+      "font_class": "play",
+      "unicode": "e66e",
+      "unicode_decimal": 58990
+    },
+    {
       "icon_id": "18176393",
       "name": "音量,关",
       "font_class": "sound-close",
@@ -20,25 +34,11 @@
       "unicode_decimal": 60030
     },
     {
-      "icon_id": "7594158",
-      "name": "24gf-playlist",
-      "font_class": "playlist",
-      "unicode": "ea82",
-      "unicode_decimal": 60034
-    },
-    {
       "icon_id": "710369",
       "name": "07暂停",
       "font_class": "stop",
       "unicode": "e628",
       "unicode_decimal": 58920
-    },
-    {
-      "icon_id": "2076218",
-      "name": "播放2",
-      "font_class": "play",
-      "unicode": "e87c",
-      "unicode_decimal": 59516
     },
     {
       "icon_id": "14775214",
