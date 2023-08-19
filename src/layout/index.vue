@@ -12,7 +12,9 @@
           <router-view></router-view>
         </el-main>
       </el-container>
-      <el-footer class="cm-footer"></el-footer>
+      <el-footer class="cm-footer">
+        <FooterComp />
+      </el-footer>
     </el-container>
     <el-drawer
       v-model="isExpand"
@@ -30,9 +32,10 @@
 <script>
 import HeaderComp from "@/components/header/index.vue";
 import AsideComp from "@/components/aside/index.vue";
+import FooterComp from "@/components/footer/index.vue";
 export default {
   name: "LayoutIndex",
-  components: { HeaderComp, AsideComp },
+  components: { HeaderComp, AsideComp, FooterComp },
   data() {
     return {
       isExpand: false
