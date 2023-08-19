@@ -3,7 +3,7 @@ import { ElMessage } from "element-plus";
 import { storageAction, customInterval, generatorRouters } from "@/utils/tool";
 import { getqrStatus, getUserStatus, getUserDetail, getUserPlaylist } from "@/api/user";
 import router, { asyncRoutes } from "@/router/index";
-import { example as loginApp } from "@/components/login";
+import { example as loginApp } from "@/plugins/login";
 
 export default {
   state: {

@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 
 import Layout from "@/layout/index.vue";
-import { example as LoginApp } from "@/components/login/index";
+import { example as LoginApp } from "@/plugins/login/index";
 import { getStatus } from "@/utils/tool";
 import store from "@/store/index";
 /*

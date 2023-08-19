@@ -4,7 +4,7 @@ import { ElMessage } from "element-plus";
 import router from "./router/index";
 import store from "./store/index";
 import App from "./App.vue";
-import LoginPop from "./components/login/index";
+import LoginPop from "./plugins/login/index";
 import "element-plus/theme-chalk/src/message.scss";
 import "@/assets/iconfont/iconfont.css";
 
