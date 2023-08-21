@@ -7,7 +7,7 @@
           v-for="(link, index) in links"
           :key="link.name"
           :class="{ active: index === active }"
-          @click="toggleComp(link, index)"
+          @click="titleClink(link, index)"
         >
           {{ link.name }}
         </span>
@@ -28,7 +28,7 @@
 </template>
 <script>
 import { defineAsyncComponent } from "vue";
-import { getPlaylistDetail as playlistDetail } from "@/api/song";
+import { mapState, mapGetters } from "vuex";
 const PlaylistDetailHead = defineAsyncComponent(() => import("@/components/playlist-detail-heade/index.vue"));
 const TitleLink = defineAsyncComponent(() => import("@/components/title-link/index.vue"));
 const SongTable = defineAsyncComponent(() => import("@/components/song-table/index.vue"));
@@ -42,7 +42,6 @@ export default {
   },
   data() {
     return {
-      playlistData: null,
       links: [{ name: "歌曲列表" }],
       active: 0,
       tableHead: [
@@ -74,6 +73,15 @@ export default {
     };
   },
   computed: {
+    // 获取预览歌单相关store信息
+    ...mapGetters({
+      tracks: "previewTracks",
+      total: "previewTotal",
+      previewId: "previewId"
+    }),
+    ...mapState({
+      playlistData: (state) => state.song.previewPlaylistDetail
+    }),
     playlistId() {
       return this.$route.params?.id;
     },
@@ -88,28 +96,11 @@ export default {
       } else {
         return this.tableHead;
       }
-    },
-    tracks() {
-      return this.playlistData?.tracks || [];
-    },
-    total() {
-      return this.playlistData?.trackCount || 0;
     }
   },
   methods: {
-    async getPlaylistDetail() {
-      this.loading = true;
-      try {
-        const res = await playlistDetail({ id: this.playlistId });
-        const { playlist = {} } = res?.data || {};
-        this.playlistData = playlist;
-        // const musicData = await getAppointAttr(playlist, ["trackIds"]).trackIds?.map((item) => item.id);
-      } catch (error) {
-        console.error(error);
-      }
-      this.loading = false;
-    },
-    toggleComp(link, index) {
+    // 标题点击
+    titleClink(link, index) {
       this.active = index;
       link?.path && this.$router.push(link.path);
     },
@@ -124,6 +115,11 @@ export default {
       minute = minute >= 10 ? minute : "0" + minute;
       second = second >= 10 ? second : "0" + second;
       return `${parseInt(hours) > 0 ? hours : ""}${minute}:${second}`;
+    },
+
+    // 获取歌单详情
+    getPlaylistDetail() {
+      this.$store.dispatch("playlistDetail", this.playlistId);
     }
   },
   created() {
