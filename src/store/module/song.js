@@ -19,9 +19,11 @@ export default {
   actions: {
     // 获取歌单详情信息
     async playlistDetail({ commit }, id) {
+      // 每次获取新的歌单前将store中的旧的歌单信息先置空
+      commit("setPreviewPlaylistDetail", null);
       try {
         const res = await getPlaylistDetail({ id });
-        const { playlist = {} } = res?.data || {};
+        const { playlist = null } = res?.data || {};
         commit("setPreviewPlaylistDetail", playlist);
       } catch (error) {
         console.error(error);

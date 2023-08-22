@@ -118,8 +118,10 @@ export default {
     },
 
     // 获取歌单详情
-    getPlaylistDetail() {
-      this.$store.dispatch("playlistDetail", this.playlistId);
+    async getPlaylistDetail() {
+      this.loading = true;
+      await this.$store.dispatch("playlistDetail", this.playlistId);
+      this.loading = false;
     }
   },
   created() {
