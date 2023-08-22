@@ -1,7 +1,7 @@
 <template>
   <div v-loading="loading" class="song-table-comp">
     <template v-if="tableData.length">
-      <el-table :show-header="showHeader" :stripe="stripe" :data="tableData">
+      <el-table :show-header="showHeader" :stripe="stripe" :data="tableData" @row-dblclick="play">
         <slot>
           <el-table-column type="index" v-if="showIndex" width="65">
             <template #default="{ $index }">
@@ -77,7 +77,12 @@ export default {
       };
     }
   },
-  methods: {},
+  methods: {
+    play(row) {
+      const { id = "" } = row;
+      this.$store.dispatch("play", { lists: this.tableData, id });
+    }
+  },
   watch: {}
 };
 </script>
