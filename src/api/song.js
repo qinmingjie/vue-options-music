@@ -91,3 +91,12 @@ export function recommendSongs(data) {
     isCookie: true
   });
 }
+
+// 获取音乐url
+export function musicUrl(params) {
+  return request({
+    url: "/song/url/v1",
+    method: "GET",
+    params
+  });
+}
