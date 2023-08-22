@@ -24,17 +24,40 @@
         <span v-show="isPlay" @click="toggleAudioStatus(false)"><i class="iconfont icon-stop"></i></span>
 
         <span v-show="isShow" @click="prevOrNext()"><i class="iconfont icon-next"></i></span>
-        <span v-show="isShow"><i class="iconfont">词</i></span>
+        <!-- <span v-show="isShow"><i class="iconfont">词</i></span> -->
       </div>
       <div class="control-slider" v-if="isShow">
         <span class="current-time">{{ formatTime(currentTime) }}</span>
-        <el-slider v-model="slider" @input="sliderToCurrentTime" :show-tooltip="false" size="small" />
+        <el-slider
+          v-model="slider"
+          @input="sliderToCurrentTime"
+          :show-tooltip="false"
+          size="small"
+          class="audio-progress"
+        />
         <span class="total-time">{{ formatTime(musicData.dt) }}</span>
       </div>
     </div>
+    <!-- 音量和播放列表控件 -->
     <div class="music-play-list">
+      <div class="sound-wrap">
+        <i class="iconfont icon-sound-open" v-show="isShow && sound"></i>
+        <i class="iconfont icon-sound-close" v-show="isShow && sound == 0"></i>
+        <el-slider
+          v-model="sound"
+          :show-tooltip="false"
+          size="small"
+          vertical
+          height="100px"
+          class="sound-slider"
+          :min="0"
+          :max="1"
+          :step="0.1"
+        ></el-slider>
+      </div>
       <span class="playlist-icon-wrap" @click="isExpand = true"><i class="iconfont icon-playlist"></i></span>
     </div>
+    <!-- 播放列表抽屉 -->
     <el-drawer
       v-model="isExpand"
       :with-header="false"
@@ -64,11 +87,13 @@
     </el-drawer>
     <audio
       :src="musicUrl"
+      :volume="sound"
       ref="audio"
       autoplay
-      @timeupdate="getCurrentTime"
       :currentTime="sliderTime / 1000"
       @ended="prevOrNext()"
+      @timeupdate="getCurrentTime"
+      v-show="false"
     ></audio>
   </div>
 </template>
@@ -104,7 +129,8 @@ export default {
       slider: 0, // 0-100
       sliderTime: 0,
       isPlay: false,
-      random: false // 随机播放
+      random: false, // 随机播放
+      sound: 0.5 // 0-100
     };
   },
   computed: {
@@ -297,14 +323,71 @@ export default {
       top: -1px;
       color: var(--el-text-color-secondary);
     }
+    .audio-progress {
+      height: 14px;
+      margin: 0 0.5em 0 0.6em;
+    }
+    .el-slider__button-wrapper {
+      height: 26px;
+      width: 26px;
+      top: -10px;
+    }
+    :deep(.el-slider__button) {
+      height: 10px;
+      width: 10px;
+    }
+    .el-drawer__body {
+      padding-left: 0;
+    }
   }
   .music-play-list {
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    .sound-wrap {
+      position: relative;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      &:hover {
+        .sound-slider {
+          display: block;
+        }
+      }
+    }
+
+    .sound-slider {
+      position: absolute;
+      top: -115px;
+      left: 50%;
+      transform: translateX(-50%);
+      margin: 0;
+      z-index: 10;
+      background-color: #fff;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      padding: 1em 0;
+      min-height: 100px;
+      border-radius: 0.5em;
+      display: none;
+      :deep(.el-slider__button-wrapper) {
+        height: 26px;
+        width: 26px;
+        left: -10px;
+      }
+
+      :deep(.el-slider__button) {
+        height: 10px;
+        width: 10px;
+      }
+    }
     .playlist-icon-wrap {
       height: 100%;
       width: 2em;
-      position: absolute;
-      right: 0;
-      top: 0;
       display: flex;
       justify-content: flex-end;
       align-items: center;
@@ -330,24 +413,6 @@ export default {
     align-items: center;
     font-weight: bold;
     color: var(--el-text-color-secondary);
-  }
-  :deep(.el-slider--small) {
-    height: 14px;
-    margin: 0 0.5em 0 0.6em;
-  }
-  :deep(.el-slider__button-wrapper) {
-    height: 26px;
-    width: 26px;
-    top: -10px;
-  }
-  :deep(.el-slider__button) {
-    height: 10px;
-    width: 10px;
-    // width: 0.6em;
-    // height: 0.6em;
-  }
-  :deep(.el-drawer__body) {
-    padding-left: 0;
   }
   &.mobile {
     .music-card {
