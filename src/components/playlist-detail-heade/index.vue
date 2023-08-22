@@ -13,7 +13,9 @@
         <span class="create-time">{{ createTime }}</span>
       </div>
       <div class="count">
-        <el-button class="play" type="primary" round><i class="iconfont icon-play"></i>播放</el-button>
+        <el-button class="play" type="primary" round @click="play(data.id)">
+          <i class="iconfont icon-play"></i>播放
+        </el-button>
         <el-button class="subscribe" type="default" round>
           <i class="iconfont icon-subscribe"></i>收藏{{ count(data.subscribedCount, true) }}
         </el-button>
@@ -40,6 +42,7 @@
 <script>
 import { defineAsyncComponent } from "vue";
 import { formatTimeStamp, formatPlayCount } from "@/utils/tool";
+import { mapGetters } from "vuex";
 const PreviewListCard = defineAsyncComponent(() => import("@/components/preview-list-card/index.vue"));
 export default {
   name: "PlaylistDetailHead",
@@ -59,6 +62,10 @@ export default {
     return {};
   },
   computed: {
+    ...mapGetters({
+      previewId: "previewId",
+      previewTracks: "previewTracks"
+    }),
     cardData() {
       return this.data && [{ id: this.data.id, picUrl: this.data.coverImgUrl }];
     },
@@ -81,6 +88,12 @@ export default {
         return val ? `(${formatPlayCount(val)})` : "";
       }
       return val ? `${formatPlayCount(val)}` : "";
+    },
+    async play(playlistId) {
+      if (this.previewId !== playlistId) {
+        await this.$store.dispatch("playlistDetail", playlistId);
+      }
+      await this.$store.dispatch("play", { lists: this.previewTracks });
     }
   }
 };
