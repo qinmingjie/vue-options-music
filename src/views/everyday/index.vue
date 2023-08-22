@@ -11,7 +11,9 @@
         </div>
       </div>
       <div class="everyday-actions">
-        <el-button type="primary" round class="play"><i class="iconfont icon-play"></i>播放全部</el-button>
+        <el-button type="primary" round class="play" @click="play">
+          <i class="iconfont icon-play"></i>播放全部
+        </el-button>
         <el-button type="default" round class="subscribe"><i class="iconfont icon-subscribe"></i>收藏全部</el-button>
       </div>
     </div>
@@ -102,6 +104,9 @@ export default {
       minute = minute >= 10 ? minute : "0" + minute;
       second = second >= 10 ? second : "0" + second;
       return `${parseInt(hours) > 0 ? hours : ""}${minute}:${second}`;
+    },
+    play() {
+      this.$store.dispatch("play", { lists: this.songs });
     }
   },
   created() {
