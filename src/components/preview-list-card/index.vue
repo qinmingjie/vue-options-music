@@ -13,7 +13,12 @@
               <div class="image-error-slot"><img src="../../assets/img-failed.png" /></div>
             </template>
           </el-image>
-          <span class="play" v-if="isShow('playIcon')" :style="{ left: iconPosition[0], top: iconPosition[1] }">
+          <span
+            class="play"
+            v-if="isShow('playIcon')"
+            :style="{ left: iconPosition[0], top: iconPosition[1] }"
+            @click="play(list.id)"
+          >
             <i class="iconfont icon-play"></i>
           </span>
           <span class="play-count" v-if="isShow('playCount')">{{ playCount(list.playcount || list.playCount) }}</span>
@@ -30,6 +35,7 @@
 
 <script>
 import { formatPlayCount } from "@/utils/tool";
+import { mapGetters } from "vuex";
 export default {
   name: "PreviewListCard",
   props: {
@@ -69,6 +75,10 @@ export default {
     };
   },
   computed: {
+    ...mapGetters({
+      previewId: "previewId",
+      previewTracks: "previewTracks"
+    }),
     clientWidth() {
       return this.$clientWidth.value;
     },
@@ -92,6 +102,12 @@ export default {
     },
     playCount(count) {
       return formatPlayCount(count);
+    },
+    async play(playlistId) {
+      if (this.previewId !== playlistId) {
+        await this.$store.dispatch("playlistDetail", playlistId);
+      }
+      await this.$store.dispatch("play", { lists: this.previewTracks });
     }
   },
   created() {},
