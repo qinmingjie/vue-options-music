@@ -100,3 +100,21 @@ export function musicUrl(params) {
     params
   });
 }
+
+// 获取热搜列表
+export function searchHot() {
+  return request({
+    url: "/search/hot/detail",
+    method: "GET"
+  });
+}
+
+// 获取歌曲搜索建议
+export function suggest(params) {
+  return request({
+    url: "/search/suggest",
+    method: "GET",
+    params,
+    isTimeStamp: true
+  });
+}
