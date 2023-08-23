@@ -1,23 +1,23 @@
 <template>
   <div class="header-right-flex">
-    <template v-if="true">
+    <template v-if="profile">
       <div class="user" @click="$router.push('/profile')">
-        <el-avatar src="" :size="30" />
-        <el-tooltip content="info.nickname" placement="bottom">
-          <span class="nick-name"></span>
+        <el-avatar :src="profile.avatarUrl" :size="30" />
+        <el-tooltip :content="profile.nickname" placement="bottom">
+          <span class="nick-name">{{ profile.nickname }}</span>
         </el-tooltip>
       </div>
     </template>
-    <template v-if="true">
-      <span class="login" @click="$login.open">登陆</span>
-    </template>
+    <span class="login" @click="$login.open" v-if="!profile">登陆</span>
     <div class="action-flex">
-      <el-switch v-model="theme" inline-prompt active-value="default" inactive-value="dark" @change="toggleTheme" />
+      <el-icon @click="toggleTheme('dark')" v-show="theme === 'default'"><IEpSunny /></el-icon>
+      <el-icon @click="toggleTheme('default')" v-show="theme === 'dark'"><IEpMoon /></el-icon>
     </div>
   </div>
 </template>
 
 <script>
+import { mapState } from "vuex";
 export default {
   name: "profileComp",
   components: {},
@@ -26,10 +26,16 @@ export default {
       theme: "default"
     };
   },
+  computed: {
+    ...mapState({
+      profile: (state) => state.user.info?.profile
+    })
+  },
   methods: {
     toggleTheme(val) {
       this.$nextTick(() => {
         const html = document.documentElement || document.querySelector("html");
+        this.theme = val;
         html.setAttribute("class", val);
       });
     }

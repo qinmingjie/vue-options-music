@@ -1,7 +1,7 @@
 import { ElMessage } from "element-plus";
 
 import { storageAction, customInterval, generatorRouters } from "@/utils/tool";
-import { getqrStatus, getUserStatus, getUserDetail, getUserPlaylist } from "@/api/user";
+import { getqrStatus, getUserStatus, getUserDetail, getUserPlaylist, loginOut } from "@/api/user";
 import router, { asyncRoutes } from "@/router/index";
 import { example as loginApp } from "@/plugins/login";
 
@@ -35,6 +35,13 @@ export default {
     },
     SET_COLLECT_PLAYLIST(state, collect) {
       state.collectPlaylist.push(collect);
+    },
+    CLEAR_LOGIN_STATUS(state) {
+      storageAction.clearStorage();
+      state.isSkip = false;
+      state.info = null;
+      state.createPlaylist = [];
+      state.collectPlaylist = [];
     }
   },
   actions: {
@@ -101,6 +108,15 @@ export default {
         item.subscribed && commit("SET_COLLECT_PLAYLIST", item);
         !item.subscribed && commit("SET_CREATE_PLAYLIST", item);
       });
+    },
+    async loginOut({ commit }) {
+      const res = await loginOut();
+      const { code = "" } = res?.data || {};
+      if (code === 200) {
+        ElMessage.success("已退出当前账户");
+        router.push("/");
+        commit("CLEAR_LOGIN_STATUS");
+      }
     }
   },
   getters: {

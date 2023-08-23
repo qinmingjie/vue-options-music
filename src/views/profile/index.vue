@@ -8,9 +8,12 @@
           <span>{{ profile.nickname }}</span>
         </div>
         <div class="info-gender-grade">
-          <span class="grade" v-if="level">LV{{ level }}</span>
-          <span class="iconfont icon-male" v-if="profile.gender === 1"></span>
-          <span class="iconfont icon-female" v-if="profile.gender === 2"></span>
+          <div>
+            <span class="grade" v-if="level">LV{{ level }}</span>
+            <span class="iconfont icon-male" v-if="profile.gender === 1"></span>
+            <span class="iconfont icon-female" v-if="profile.gender === 2"></span>
+          </div>
+          <el-button type="primary" round @click="loginOut">退出登陆</el-button>
         </div>
         <div class="other">
           <div class="status">
@@ -123,6 +126,9 @@ export default {
     },
     jump({ id = "" }) {
       id && this.$router.push(`/playlist-detail/${id}`);
+    },
+    loginOut() {
+      this.$store.dispatch("loginOut");
     }
   },
   created() {},
@@ -163,7 +169,7 @@ export default {
       }
       .info-gender-grade {
         display: flex;
-        justify-content: flex-start;
+        justify-content: space-between;
         align-items: center;
         padding-bottom: 0.8em;
         margin-bottom: 0.8em;
@@ -251,7 +257,8 @@ export default {
         }
       }
     }
-    &.mobile {
+    &.mobile,
+    &.middle {
       .avatar {
         display: none;
       }
