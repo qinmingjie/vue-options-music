@@ -46,10 +46,11 @@ export function getStatus() {
   const createTime = storageAction.getStorage("CREATE_TIME");
   const timeDifference = new Date().getTime() - createTime;
   let loginStatus = false;
-  if (token && timeDifference < expires) {
+  if (token && createTime && timeDifference < expires) {
     loginStatus = true;
   } else {
     storageAction.clearStorage();
+    loginStatus = false;
   }
   return loginStatus;
 }
