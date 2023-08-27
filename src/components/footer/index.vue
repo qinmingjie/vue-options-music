@@ -327,7 +327,7 @@ export default {
       height: 14px;
       margin: 0 0.5em 0 0.6em;
     }
-    .el-slider__button-wrapper {
+    :deep(.el-slider__button-wrapper) {
       height: 26px;
       width: 26px;
       top: -10px;
