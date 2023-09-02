@@ -201,6 +201,10 @@ export default {
     },
     // 播放和暂停
     toggleAudioStatus(isPlay) {
+      if (!this.playlist.length) {
+        this.$message.warning("请选择音乐播放吧!");
+        return;
+      }
       if (!this.musicUrl) {
         return;
       }
@@ -211,7 +215,7 @@ export default {
     // 上一曲和下一曲
     prevOrNext(type = "next") {
       if (!this.playlist.length) {
-        this.$message.warning("请选择一首音乐播放吧!");
+        this.$message.warning("请选择音乐播放吧!");
         return;
       }
       let currentIndex = this.playlist.findIndex((item) => item.id === this.musicId);
