@@ -58,10 +58,10 @@ $--colors: (
 
 // 滚动条宽度重置
 .el-scrollbar__bar.is-vertical {
-  width: 10px;
+  width: 8px;
 }
 .el-scrollbar__bar {
-  border-radius: 10px;
+  border-radius: 8px;
 }
 
 // 按钮hover等样式重置
@@ -88,16 +88,16 @@ $--colors: (
 
 // 浏览器自带滚动条样式
 ::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
+  width: 8px;
+  height: 8px;
   background-color: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  border-radius: 10px;
-  background-color: var(--el-text-color-secondary);
+  border-radius: 8px;
+  background-color: #c1c1c1;
 }
 @media (max-width: 1200px) {
   :root {
-    --cm-scrollbar-padding: 15px;
+    --cm-scrollbar-padding: 13px;
   }
 }

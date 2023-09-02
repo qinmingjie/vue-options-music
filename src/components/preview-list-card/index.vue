@@ -252,4 +252,12 @@ export default {
     }
   }
 }
+@media (max-width: 500px) {
+  .preview-item .preview-img {
+    .play,
+    .mask {
+      opacity: 1;
+    }
+  }
+}
 </style>
