@@ -1,13 +1,12 @@
 import { createRouter, createWebHistory } from "vue-router";
 
 import Layout from "@/layout/index.vue";
-import { example as LoginApp } from "@/plugins/login/index";
 import { getStatus } from "@/utils/tool";
 import store from "@/store/index";
 /*
  * meta字段
  * title:标题,isAsideMenu是否是侧边栏菜单
- * isLogin:是否需要登陆访问,isCustomMenu:菜单是否需要自定义
+ * isAuth:是否需要登陆访问,isCustomMenu:菜单是否需要自定义
  */
 const routes = [
   {
@@ -112,12 +111,6 @@ const routes = [
         ]
       }
     ]
-  },
-  {
-    path: "/:pathMatch(.*)*",
-    name: "page404",
-    component: () => import("@/views/404.vue"),
-    meta: { title: "404 Not Found!" }
   }
 ];
 
@@ -129,7 +122,7 @@ export const asyncRoutes = [
     meta: {
       title: "每日推荐",
       isAsideMenu: true,
-      isLogin: true,
+      isAuth: true,
       roles: ["admin"]
     }
   },
@@ -140,7 +133,7 @@ export const asyncRoutes = [
     meta: {
       title: "个人中心",
       isAsideMenu: true,
-      isLogin: true,
+      isAuth: true,
       roles: ["admin"]
     }
   },
@@ -152,7 +145,7 @@ export const asyncRoutes = [
       title: "我喜欢的音乐",
       isAsideMenu: true,
       isCustomMenu: true,
-      isLogin: true,
+      isAuth: true,
       roles: ["admin"]
     }
   },
@@ -164,7 +157,7 @@ export const asyncRoutes = [
       title: "创建的歌单",
       isAsideMenu: true,
       isCustomMenu: true,
-      isLogin: true,
+      isAuth: true,
       roles: ["admin"]
     }
   },
@@ -176,9 +169,15 @@ export const asyncRoutes = [
       title: "收藏的歌单",
       isAsideMenu: true,
       isCustomMenu: true,
-      isLogin: true,
+      isAuth: true,
       roles: ["admin"]
     }
+  },
+  {
+    path: "/:pathMatch(.*)*",
+    name: "page404",
+    component: () => import("@/views/404.vue"),
+    meta: { title: "404 Not Found!", roles: [] }
   }
 ];
 
@@ -187,23 +186,22 @@ const router = createRouter({
   history: createWebHistory()
 });
 
-let isAdd = false;
 router.beforeEach(async (to, from, next) => {
   document.title = to.meta?.title || "music";
   const isLogin = getStatus();
   if (isLogin) {
-    if (!isAdd) {
-      await store.dispatch("setAsyncRouter");
-      isAdd = true;
-      return next(to.fullPath);
+    if (!store.state.user.info) {
+      await store.dispatch("getUserInfo");
+      next(to.fullPath);
+    } else {
+      next();
     }
-    next();
   } else {
-    if (!store.state.user.isSkip) {
-      await LoginApp.open();
-      return next(to.fullPath);
+    if (to.fullPath.indexOf("/find") !== -1) {
+      next();
+    } else {
+      next("/find");
     }
-    next();
   }
 });
 
