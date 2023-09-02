@@ -66,13 +66,7 @@
       :size="drawerOptions.width"
       class="aside-drawer"
     >
-      <SongTable
-        :table-data="playlist"
-        :header-options="headerOptions"
-        :show-index="false"
-        :show-header="false"
-        v-if="playlist.length"
-      >
+      <SongTable :table-data="playlist" :header-options="headerOptions" :show-index="false" v-if="playlist.length">
         <template #song-name="{ row }">
           <span :class="{ active: row.id === musicId, name: true }">{{ row.name }}</span>
         </template>
@@ -111,19 +105,6 @@ export default {
   data() {
     return {
       isExpand: false,
-      headerOptions: [
-        {
-          slotName: "song-name"
-        },
-        {
-          slotName: "song-ar",
-          width: 90
-        },
-        {
-          slotName: "song-time",
-          width: 70
-        }
-      ],
       musicUrl: "",
       currentTime: 0, // 当前音乐播放进度,单位毫秒
       slider: 0, // 0-100
@@ -158,6 +139,30 @@ export default {
         direction: this.clientWidth <= 1200 ? "btt" : "rtl",
         width: this.clientWidth <= 1200 ? "auto" : 400
       };
+    },
+    headerOptions() {
+      let options = [
+        {
+          slotName: "song-name",
+          label: "音乐标题"
+        },
+        {
+          slotName: "song-ar",
+          label: "歌手",
+          width: 90
+        },
+        {
+          slotName: "song-time",
+          label: "时间",
+          width: 70
+        }
+      ];
+      if (this.clientWidth <= 500) {
+        options[1].width = 0;
+      } else if (this.clientWidth <= 1200) {
+        options[1].width = "auto";
+      }
+      return options;
     }
   },
   methods: {
@@ -336,9 +341,6 @@ export default {
       height: 10px;
       width: 10px;
     }
-    .el-drawer__body {
-      padding-left: 0;
-    }
   }
   .music-play-list {
     position: absolute;
@@ -394,6 +396,10 @@ export default {
       font-size: 1em;
     }
   }
+  .time,
+  .ar {
+    font-size: 0.8em;
+  }
   .name,
   .ar,
   .time {
@@ -413,6 +419,10 @@ export default {
     align-items: center;
     font-weight: bold;
     color: var(--el-text-color-secondary);
+  }
+
+  :deep(.el-drawer__body) {
+    padding-left: 0;
   }
   &.mobile {
     .music-card {
