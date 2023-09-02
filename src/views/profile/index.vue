@@ -1,5 +1,5 @@
 <template>
-  <div class="profile-comp">
+  <div class="profile-comp" v-if="profile">
     <div :class="['profile-user', responseClass]">
       <img :src="profile.avatarUrl" alt="" class="avatar" />
       <div class="info">
