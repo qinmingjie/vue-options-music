@@ -63,11 +63,11 @@ export default {
           slotName: "song-dt",
           label: "时间",
           width: 100
-        },
-        {
-          label: "操作",
-          width: 60
         }
+        // {
+        //   label: "操作",
+        //   width: 60
+        // }
       ],
       loading: false
     };
@@ -90,7 +90,7 @@ export default {
     },
     songTableHead() {
       if (this.clientWidth <= 900) {
-        return this.tableHead.filter((item) => item.label === "操作" || item.label === "标题");
+        return this.tableHead.filter((item) => item.label === "时间" || item.label === "标题");
       } else if (this.clientWidth <= 1200) {
         return this.tableHead.filter((item) => item.label !== "专辑");
       } else {
