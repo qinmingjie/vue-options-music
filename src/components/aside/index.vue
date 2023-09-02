@@ -126,10 +126,11 @@ export default {
   watch: {
     info: {
       async handler(newVal) {
-        await this.routesToMenu(this.routes);
+        await this.routesToMenu(this.$router.getRoutes());
         newVal && (await this.handlePlaylist());
       },
-      immediate: true
+      immediate: true,
+      deep: true
     }
   }
 };
