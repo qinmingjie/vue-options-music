@@ -1,6 +1,6 @@
 <template>
   <el-scrollbar>
-    <el-menu class="cm-menu" router unique-opened :default-active="activePath">
+    <el-menu class="cm-menu" router unique-opened :default-active="defaultActive">
       <el-menu-item v-for="menu in menus" :key="menu.name" :index="menu.path">
         {{ menu.title }}
         <template v-if="menu.children && menu.children.length">
@@ -50,7 +50,11 @@
 import { mapState, mapActions } from "vuex";
 export default {
   name: "AsideIndex",
-  props: {},
+  props: {
+    defaultActive: {
+      type: String
+    }
+  },
   components: {},
   data() {
     return {

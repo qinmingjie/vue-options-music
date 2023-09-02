@@ -6,7 +6,7 @@
       </el-header>
       <el-container class="cm-content">
         <el-aside class="cm-aside">
-          <AsideComp />
+          <AsideComp :defaultActive="defaultActiveMenu" />
         </el-aside>
         <el-main class="cm-main">
           <router-view></router-view>
@@ -24,7 +24,7 @@
       :before-close="closeAside"
       class="aside-drawer"
     >
-      <AsideComp />
+      <AsideComp :defaultActive="defaultActiveMenu" />
     </el-drawer>
   </div>
 </template>
@@ -40,6 +40,14 @@ export default {
     return {
       isExpand: false
     };
+  },
+  computed: {
+    defaultActiveMenu() {
+      if (this.$route.path.search("find") !== -1) {
+        return "/find";
+      }
+      return this.$route.path;
+    }
   },
   methods: {
     closeAside() {
