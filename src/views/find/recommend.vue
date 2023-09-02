@@ -50,11 +50,11 @@ export default {
       try {
         if (this.$isLogin()) {
           // 获取登陆后的热门推荐
-          const res = await getLoginRecommendPlaylist({ limit: 20 });
+          const res = await getLoginRecommendPlaylist({ limit: 10 });
           this.recommendList = res.data?.recommend || []; // chunkArray((res.data?.recommend || []).slice(0, 20), 5);
         } else {
           // 获取普通的热门推荐
-          const res = await getRecommendPlaylist({ limit: 20 });
+          const res = await getRecommendPlaylist({ limit: 10 });
           this.recommendList = res.data?.result || []; //chunkArray((res.data?.result || []).slice(0, 20), 5);
         }
       } catch (error) {
