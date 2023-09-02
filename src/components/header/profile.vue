@@ -25,6 +25,7 @@
       :close-on-press-escape="false"
       :close-on-click-modal="false"
       :show-close="false"
+      :lock-scroll="false"
     >
       <template #default>
         <div class="qrimg-container">
