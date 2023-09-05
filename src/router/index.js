@@ -30,7 +30,7 @@ const routes = [
           },
           {
             path: "rank-list",
-            name: "rank-lint",
+            name: "rank-list",
             component: () => import("@/views/find/rank-list.vue"),
             meta: { title: "排行榜" }
           },
@@ -181,9 +181,12 @@ export const asyncRoutes = [
   }
 ];
 
+const whiteList = ["home", "find", "recommend", "ranklist", "playlist", "playlist-detail"];
+
 const router = createRouter({
+  base: "/vue-option-music/",
   routes,
-  history: createWebHistory()
+  history: createWebHistory("/vue-option-music/")
 });
 
 router.beforeEach(async (to, from, next) => {
@@ -197,7 +200,7 @@ router.beforeEach(async (to, from, next) => {
       next();
     }
   } else {
-    if (to.fullPath.indexOf("/find") !== -1) {
+    if (whiteList.some((item) => item === to.name)) {
       next();
     } else {
       next("/find");
