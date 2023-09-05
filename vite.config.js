@@ -14,6 +14,10 @@ import IconsResolver from "unplugin-icons/resolver";
 // https://vitejs.dev/config/
 
 export default defineConfig({
+  base: "/vue-option-music/",
+  build: {
+    outDir: "F:/nginx-1.22.1/html/music/vue-option-music"
+  },
   css: {
     preprocessorOptions: {
       scss: {
