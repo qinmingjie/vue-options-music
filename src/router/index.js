@@ -181,7 +181,7 @@ export const asyncRoutes = [
   }
 ];
 
-const whiteList = ["home", "find", "recommend", "ranklist", "playlist", "playlist-detail"];
+const whiteList = ["home", "find", "recommend", "rank-list", "playlist", "playlist-detail"];
 
 const router = createRouter({
   base: "/vue-option-music/",
