@@ -26,13 +26,16 @@
       <div class="other">
         <div class="tags">
           标签:
-          <router-link v-for="link in data.tags" :to="'/find/playlist?tag=' + link" :key="link">{{ link }}</router-link>
+          <template v-if="data.tags && data.tags.length">
+            <router-link v-for="link in data.tags" :to="'/find/playlist?tag=' + link" :key="link">{{ link }}</router-link>
+          </template>
+          <span v-else>暂无标签</span>
         </div>
         <div class="songs">
           歌曲:<span>{{ data.trackCount }}</span> 播放:<span>{{ count(data.playCount) }}</span>
         </div>
         <div class="intro">
-          简介:<span :title="data.description">{{ data.description }}</span>
+          简介:<span :title="data.description" v-if="data.description">{{ data.description }}</span><span v-else>暂无简介</span>
         </div>
       </div>
     </div>
